@@ -1,0 +1,158 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@page import="com.eds.gne.ciscosecure.CSACSPersistenceConstants"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>
+<script language="Javascript" src="<%=request.getContextPath()%>/com/js/validation.js"></script>
+
+<link href="<%=request.getContextPath()%>/com/themes/default.css" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath()%>/com/themes/alphacube.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<%=request.getContextPath()%>/com/js/pwc/prototype.js"> </script> 
+<script type="text/javascript" src="<%=request.getContextPath()%>/com/js/pwc/effects.js"> </script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/com/js/pwc/window.js"> </script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/com/js/pwc/window_effects.js"> </script>
+
+
+
+<script language="Javascript1.2" type="text/javascript">
+	<!--//
+	var msgIsEmpty = '<bean:message key="errors.isempty" />';
+	var msgInvalidEmail = '<bean:message key="errors.invalidEmail" />';
+	
+	var groupLabel = '<bean:message key="label.adduser.groupname" />';
+	var userNameLabel = '<bean:message key="label.usermaint.username" />';
+  var reviewerLabel = '<bean:message key="label.adduser.reviewer" />';
+  var passwordLabel = '<bean:message key="label.auth.password" />';
+	
+	var groupIsEmpty = msgIsEmpty.replace(/#0#/,"'" + groupLabel + "'");
+	var userIsEmpty = msgIsEmpty.replace(/#0#/,"'" + userNameLabel + "'");
+	var passwordIsEmpty = msgIsEmpty.replace(/#0#/,"'" + passwordLabel + "'");
+	var reviewerIsEmpty = msgIsEmpty.replace(/#0#/,"'" + reviewerLabel + "'");
+	var reviewerInvalid = msgInvalidEmail.replace(/#0#/,"'" + reviewerLabel + "'");
+	
+	function validate() {
+    if (document.forms['FormUser'].elements["user.userName"].value.length < 1) {
+      alert(userIsEmpty);
+      document.forms['FormUser'].elements["user.userName"].focus();
+      return false;
+    }
+    if (document.forms['FormUser'].elements["user.groupName"].value.length < 1) {
+      alert(groupIsEmpty);
+      document.forms['FormUser'].elements["user.groupName"].focus();
+      return false;
+    }
+    if (document.forms['FormUser'].elements["user.password"].value.length < 1) {
+        alert(passwordIsEmpty);
+        document.forms['FormUser'].elements["user.password"].focus();
+        return false;
+      }
+    if (document.forms['FormUser'].elements["user.reviewer.reviewerId"].value.length < 1) {
+      alert(reviewerIsEmpty);
+      document.forms['FormUser'].elements["user.reviewer.reviewerId"].focus();
+      return false;
+    }
+    if (emailValidation(document.forms['FormUser'].elements["user.reviewer.reviewerId"].value)==false){
+      alert(reviewerInvalid);
+      document.forms['FormUser'].elements["user.reviewer.reviewerId"].value=""
+      document.forms['FormUser'].elements["user.reviewer.reviewerId"].focus();
+      return false;
+    }
+    return true;
+	}
+
+	function back() {
+		document.forms['FormUser'].action = '<%=request.getContextPath()%>/users/userMaint.do?method=list';
+		document.forms['FormUser'].submit();
+	}
+
+	  // Domain maintenance configs
+	  var okLbl = '<bean:message key="label.submit" />';
+	  var cancelLbl = '<bean:message key="label.cancel" />';
+	  var errorMsg = '<bean:message key="global.error.message"/>';
+	  var delDomainInfo = '<bean:message key="label.deldomain.info"/>';
+	  var delDomainConfirm = '<bean:message key="label.deldomain.confirm"/>';
+	  var yesLbl = '<bean:message key="global.yes" />';
+	  var noLbl = '<bean:message key="global.no" />';
+	  var entityKey = '<bean:write property="user.userKey" name="FormUser" />';
+	  var entityKeyProperty = 'user.userKey';
+	  var formName = 'FormUser';
+	  var contextPath = '<%=request.getContextPath()%>';
+	  var removeDomainMethod = 'removeDomainNoCheck';
+	//-->
+</script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/com/js/domain.js" ></script>
+<bean:define id="usr" property="user" name="FormUser"/>
+<%com.eds.gne.ciscosecure.entities.jpa.CSUser user = 
+  (com.eds.gne.ciscosecure.entities.jpa.CSUser) usr;%>
+
+<h2><bean:message key="label.adduser.title" /></h2>
+<html:form action="/users/userMaint.do?method=submitAddUser">
+	<table border="0">
+		<tr>
+			<td><bean:message key="label.usermaint.username" /></td>
+			<td><html:text property="user.userName" maxlength="50"
+				size="30" /></td>
+		</tr>
+		<tr>
+      <td><bean:message key="label.adduser.fullname" /></td>
+      <td><html:text property="user.fullName" maxlength="100"
+        size="50" /></td>
+    </tr>
+    <tr>
+      <td><bean:message key="label.adduser.description" /></td>
+      <td><html:text property="user.description" maxlength="50"
+        size="50" /></td>
+    </tr>
+    <tr>
+      <td><bean:message key="label.adduser.email" /></td>
+      <td><html:text property="user.emailAddress" maxlength="50"
+        size="35" /></td>
+    </tr>
+    <tr>
+      <td><bean:message key="label.adduser.reviewer" /></td>
+      <td>
+        <html:select property="user.reviewer.reviewerId">
+          <html:option value=""></html:option>
+          <html:optionsCollection property="reviewers" label="email" value="reviewerId" />
+        </html:select>
+      </td>
+    </tr>
+	  <tr>
+      <td><bean:message key="label.adduser.groupname" /></td>
+      <td>
+        <html:select property="user.group.groupId">
+          <html:option value=""></html:option>
+          <html:optionsCollection property="groups" label="groupName" value="groupId" />
+        </html:select>
+      </td>
+    </tr>
+    <tr>
+      <td><bean:message key="label.auth.password" /></td>
+      <td>
+        <logic:equal value="true" name="FormUser" property="showPwdDropDown">
+        <html:select property="user.password">
+          <html:option value="<%=user.getPassword()%>"><%=user.getPassword()%>&nbsp;(<bean:message key="label.resetpassword.randomgenerated"/>)&nbsp;&nbsp;</html:option>
+          <h:domainOptions 
+            domainName="<%=CSACSPersistenceConstants.DOMAIN_ACS_PASSWORD%>" 
+            defaultValue="<%=user.getPassword()%>" />
+        </html:select>
+        <h:domainMaint 
+          domainName="<%=CSACSPersistenceConstants.DOMAIN_ACS_PASSWORD%>" 
+          fieldName="user.password" /> &nbsp;(<bean:message key="label.resetpassword.randomgeneratedselect"/>)
+      </logic:equal>
+      <logic:notEqual value="true" name="FormUser" property="showPwdDropDown">
+        <html:text property="user.password" size="20" maxlength="30" />&nbsp;(<bean:message key="label.resetpassword.randomgenerated"/>)
+      </logic:notEqual>
+      </td>
+    </tr>
+	</table>
+
+  <p class="buttons">
+	  <html:submit styleClass="submit" onclick="return validate();">
+		  <bean:message key="label.submit" />
+	  </html:submit>
+    <html:submit styleClass="submit" onclick="back();">
+      <bean:message key="label.back" />
+    </html:submit>
+  </p>
+</html:form>

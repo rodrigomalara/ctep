@@ -1,0 +1,42 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
+<h2><bean:message key="label.adddomain.title"/></h2>
+<html:form action="/admin/domainAdmin.do" focus="domain.optionValue" method="POST" >
+	<html:hidden property="domain.domain" />
+	<table>
+		<tr>
+			<td>
+				<label for="domain.domain"><bean:message key="label.adddomain.domain"/></label>
+			</td>
+			<td>
+				<bean:write property="domain.domain" name="FormDomain" />
+			</td>
+		</tr>
+<%-- 		<tr>
+			<td>
+				<label for="domain.description"><bean:message key="label.adddomain.description"/> <span
+					class="accenttext">*</span></label>
+			</td>
+			<td>
+				<logic:notEmpty property="domain.description" name="FormDomain">
+					<bean:write property="domain.description" name="FormDomain" />
+					<html:hidden property="domain.description" />
+				</logic:notEmpty>
+				<logic:empty property="domain.description" name="FormDomain">
+					<html:text property="domain.description" maxlength="100" size="30" />
+				</logic:empty>
+			</td>
+		</tr> --%>
+		<tr>
+			<td>
+				<label for="domain.optionValue"><bean:message key="label.adddomain.value"/><span
+					class="accenttext">*</span></label>
+			</td>
+			<td>
+				<html:text property="domain.optionValue" maxlength="100" size="40" />
+			</td>
+		</tr>
+	</table>
+</html:form>

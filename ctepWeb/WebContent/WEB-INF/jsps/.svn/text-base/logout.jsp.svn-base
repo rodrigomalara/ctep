@@ -1,0 +1,20 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@ page import="javax.servlet.http.HttpSession"%>
+<%
+HttpSession sess = request.getSession(false);
+if (sess != null) {
+	sess.invalidate();
+}
+%>
+<h3><bean:message key="label.auth.loggedout"/></h3>
+<script language="Javascript1.2" type="text/javascript">
+	<!--//
+	function gohome() {
+		location.href="<%=request.getContextPath()%>/";
+	}
+	setTimeout("gohome()", 3000);
+//-->
+</script>
+<p><a onclick="javascript:gohome()"><bean:message key="label.auth.nowait"/></a></p>

@@ -1,0 +1,57 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+<%@page import="com.eds.gne.ciscosecure.users.forms.FormMassUploadUsers"%>
+
+<bean:define id="submitEnabled" name="FormMassUploadUsers" property="isFileOk" />
+
+<script language="Javascript1.2" type="text/javascript">
+	<!--//
+	/*
+	var msgIsEmpty = '<bean:message key="errors.isempty" />';
+	var groupLabel = '<bean:message key="label.groupchange.group" />';
+	var groupIsEmpty = msgIsEmpty.replace(/#0#/,"'" + groupLabel + "'");
+*/
+	function validate() {
+   /* if (document.forms[0].elements["user.userName"].value.length < 1) {
+      alert(userIsEmpty);
+      return false;
+    }*/
+    return true;
+	}
+	//-->
+</script>
+
+<h2><bean:message key="label.massuploadusers.title" /></h2>
+<br/>
+
+<html:form action="/users/massUploadUsers.do?method=submit" method="post">
+
+  <table border="0">
+    <tr>
+      <td><strong><bean:message key="label.adduser.reviewer" /></strong></td>
+      <td>
+        <bean:write property="reviewer.email" name="FormMassUploadUsers" />
+      </td>
+    </tr>
+  </table>
+
+  <display:table id="row" name="items" 
+    requestURI="/users/massUploadUsers.do?method=submit">
+    <display:column property="userName" titleKey="label.usermaint.username" />
+    <display:column property="email" titleKey="label.adduser.email" />
+    <display:column property="groupName" titleKey="label.adduser.groupname" /> 
+    <display:column maxWords="1" property="userExists" titleKey="label.massuploadusers.userok" 
+          decorator="com.eds.gne.ciscosecure.global.dtdecorators.UserAlreadyInDBDecorator" />
+  </display:table>
+
+  <p class="buttons">
+	  <html:submit styleClass="submit" onclick="return validate();" disabled="<%=(!(Boolean)submitEnabled)%>" >
+		  <bean:message key="label.submit" />
+	  </html:submit>
+    <html:button styleClass="submit" property="" onclick="javascript:history.back();">
+      <bean:message key="label.back"/>
+    </html:button>
+  </p>
+</html:form>

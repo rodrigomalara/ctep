@@ -1,0 +1,90 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+<%@page import="com.eds.gne.ciscosecure.services.AuditFacade.AuditStatus"%>
+
+<script language="Javascript" src="<%=request.getContextPath()%>/com/js/validation.js"></script>
+<script language="Javascript1.2" type="text/javascript">
+	<!--//
+	function listAudits() {
+		document.forms[0].action = "<%=request.getContextPath()%>/audit/auditMaint.do?method=listAudits";
+	  document.forms[0].submit();
+	}
+	<logic:present name="revAudits">
+	  function generateCSV() {
+	      document.forms[0].action = "<%=request.getContextPath()%>" 
+	          + "/audit/auditMaint.do?method=selectAudit&menuStyleId=listAudits&exportCSV=true&auditId=" 
+	          + "<bean:write property="auditId" name="FormAudit" />";
+	      document.forms[0].submit();
+	  }
+	  function generateMSExcel() {
+	      document.forms[0].action = "<%=request.getContextPath()%>" 
+		      + "/audit/auditMaint.do?method=selectAudit&menuStyleId=listAudits&exportMSExcel=true&auditId=" 
+	        + "<bean:write property="auditId" name="FormAudit" />";
+	      document.forms[0].submit();
+	  }
+	  function resendEmails() {
+	      document.forms[0].action = "<%=request.getContextPath()%>/audit/auditMaint.do?method=resendAudit";
+	      document.forms[0].submit();
+	  }
+	</logic:present>
+	//-->
+</script>
+
+<h2><bean:message key="label.verifyaudit.title" /> - <bean:write property="audit.description" name="FormAudit" /></h2>
+
+  <logic:present name="revAudits">
+    <ul class="desc" style="width: 85%">
+    <li><strong><bean:message key="message.verifyaudit.howto1" /></strong></li>
+    <li><bean:message key="message.verifyaudit.howto4" /></li>
+    <li><bean:message key="message.verifyaudit.howto5" /></li>
+    </ul>
+
+    <html:form action="/audit/auditMaint.do?method=resendAudit">
+      <html:hidden property="audit.auditId"/>
+      <html:hidden property="menuStyleId"/>
+      <table border="0">
+        <tr>
+          <td><strong><bean:message key="label.auditmaint.creationdate" /></strong></td>
+          <td><bean:write  name="FormAudit" property="audit.creationDate.time" format="MM-dd-yyyy hh:mm aaa" /></td>
+          <td><strong><bean:message key="label.verifyaudit.totalreviewers" /></strong></td>
+          <td><bean:write  name="FormAudit" property="audit.totalReviewers" /></td>
+          <td><strong><bean:message key="label.verifyaudit.confirmedreviewers" /></strong></td>
+          <td><bean:write  name="FormAudit" property="audit.confirmedReviewers" /></td>
+        </tr>
+      </table>
+
+      <p class="buttons">
+        <html:submit styleClass="submit" onclick="resendEmails();">
+          <bean:message key="button.verifyaudit.resendemails" />
+        </html:submit>
+        <html:button property="back" styleClass="submit" onclick="listAudits();">
+          <bean:message key="label.back"/>
+        </html:button>
+      </p>
+
+      <h3><bean:message key="label.verifyaudit.responsestatus" /></h3>
+
+      <p class="buttons">
+        <html:button onclick="javascript:generateCSV();" property="" styleClass="submit">
+          <bean:message key="button.generateCSV" />
+        </html:button>
+        <html:button onclick="javascript:generateMSExcel();" property="" styleClass="submit">
+          <bean:message key="button.generateMSExcel" />
+        </html:button>
+      </p>
+
+      <display:table id="row" name="revAudits"
+        requestURI="/audit/auditMaint.do?method=listAudits">
+        <display:column property="reviewer.email" titleKey="label.adduser.reviewer" />
+        <display:column property="lastSendDate.time" titleKey="label.verifyaudit.lastsenddate" 
+          format="{0,date,MM-dd-yyyy hh:mm aaa}"/>
+        <display:column property="resendCount" titleKey="label.verifyaudit.resendcount" />
+        <display:column property="responseDate.time" titleKey="label.verifyaudit.confirmationdate" 
+          format="{0,date,MM-dd-yyyy hh:mm aaa}"/>
+        <display:column property="totalAssociates" titleKey="label.verifyaudit.totalassociates" />
+      </display:table>
+    </html:form>
+
+  </logic:present>

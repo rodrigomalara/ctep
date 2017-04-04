@@ -1,0 +1,23 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<p id="browseralert" class="hide noprint"><bean:message key="label.topbanner.browseralert"/></p>
+<div class="hide noprint">[<a href="#sidenav" title="<bean:message key="label.topbanner.skiptoside"/>"><bean:message key="label.topbanner.skiptoside"/></a>] [<a href="#content" title="<bean:message key="label.topbanner.skiptomain"/>"  accesskey="2"><bean:message key="label.topbanner.skiptomain"/></a>]</div>
+
+
+<div id="header">
+
+  <div id="global-utils"><a name="top" id="top"></a><!--#config timefmt="%d %b %Y"--><!--#echo var="DATE_LOCAL"--> <!-- NOTE: Pull in date via server side include or use a javascript to display the users computer date. --></div>
+  <div id="site-utils">
+  <ul>
+    <li><a href="<%=request.getContextPath()%>/nav.do?target=about" ><bean:message key="label.topbanner.about"/></a>|</li>
+      <li><a href="<%=request.getContextPath()%>/nav.do?target=contact" ><bean:message key="label.topbanner.contactus"/></a>|</li>
+      <li><a href="http://infocentre.eds.com"><bean:message key="label.topbanner.infoCentre"/></a></li>
+  </ul></div>
+  <div id="site-title">
+	<img src="<%=request.getContextPath()%>/com/img/eds_logo_wht.gif" alt="EDS, an HP company logo" name="logo" width="101" height="45" id="logo" title="EDS, an HP company" />
+    <a href="<%=request.getContextPath()%>/index.jsp" accesskey="1" id="hpLink" title="<bean:message key="label.topbanner.index.hint" />"><bean:message key="label.topbanner.title"/></a>
+    <p id="tagline"><bean:message key="label.topbanner.subtitle"/></p>
+  </div>
+</div>
+

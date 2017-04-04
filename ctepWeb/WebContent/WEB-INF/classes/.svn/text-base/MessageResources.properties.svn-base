@@ -1,0 +1,395 @@
+# -- standard errors --
+errors.header=<UL>
+errors.prefix=<LI>
+errors.suffix=</LI>
+errors.footer=</UL>
+global.error.message=An error has occurred. Please contact the SA.
+# -- validator --
+errors.invalid={0} is invalid.
+errors.maxlength={0} can not be greater than {1} characters.
+errors.minlength={0} can not be less than {1} characters.
+errors.range={0} is not in the range {1} through {2}.
+errors.required={0} is required.
+errors.byte={0} must be an byte.
+errors.date={0} is not a date.
+errors.double={0} must be an double.
+errors.float={0} must be an float.
+errors.integer={0} must be an integer.
+errors.long={0} must be an long.
+errors.short={0} must be an short.
+errors.creditcard={0} is not a valid credit card number.
+errors.email={0} is an invalid e-mail address.
+# -- other --
+errors.isempty=#0# is empty. Please fill in before submitting.
+errors.invalidEmail=The e-mail address entered on #0# is not valid.
+errors.requestparametermissing=Request parameter missing. Please contact the SA.
+message.confirm=Do you really want to proceed ?
+errors.cancel=Operation cancelled.
+errors.detail={0}
+errors.general=The process did not complete. Details should follow.
+errors.token=Request could not be completed. Operation is not in sequence.
+
+message.confirm=Do you really want to proceed ?
+message.confirmdelete=Do you really want to delete the selected item ?
+
+label.back=<< Back
+label.next=Next >>
+label.edit=Edit
+label.delete=Delete
+label.clear=Clear
+label.submit=Submit
+label.cancel=Cancel
+label.field=Field
+
+button.logout=Logout
+button.applyfilters=Apply Filters
+button.generateCSV=Export to CSV
+button.generateMSExcel=Export to MS-Excel
+label.filters=Filters: 
+global.yes=Yes
+global.no=No
+global.all=All
+global.select=Select
+global.clickhere=Click here
+global.index.welcome=Welcome to CSAutomation system. Some features may not be available to you because you must be granted access to it. For access related issues please reach rodrigo.malara@eds.com. Please select an option on the menu above.
+global.error.entityalreadyexists={0} already exists.
+
+# -- Site Navigation bars--
+label.topnav.usermaint=User Maintenance
+label.topnav.reports=Reports
+label.topnav.audit=Manager Audit
+label.topnav.groupaudit=Group Audit
+
+label.sidenav.usermaint.adduser=Add User
+label.sidenav.usermaint.removeuser=Remove User
+label.sidenav.usermaint.resetpwd=Reset Password
+label.sidenav.usermaint.status=Change User's status
+label.sidenav.usermaint.chggroup=Change Group
+label.sidenav.usermaint.chgreviewer=Change Reviewer
+
+# -- Navigation Action --
+error.nav.target=The target {0} doesn't exist.
+
+# -- Login --
+label.auth.username=User ID
+label.auth.password=Password
+label.auth.title=Please login to continue
+message.auth.howto1=Login information
+message.auth.howto2=Use your EDSNet ID and password. If you are not in the AMER domain, please prepend your domain and the backslash character as in the example below<br/> <strong>EMEA\\qwe123</strong> or <strong>APAC\\qwe123</strong>.
+error.auth.notloggedin=The user isn't logged in
+button.auth.submit=Log In
+label.auth.loggedout=Logged out successfully. Hold on while we take you back to the system.
+label.auth.nowait=Click here if you don't want to wait.
+label.auth.invalidogin=Invalid user id and/or password.
+label.auth.notallowed=Your user is not allowed to access this feature.
+
+# -- Top banner --
+label.topbanner.title=Global Network Development and Automation Mgmt.
+label.topbanner.subtitle=Cisco Secure Automation tool
+label.topbanner.about=about this site
+label.topbanner.contactus=contact us
+label.topbanner.infoCentre=infoCentre global
+label.topbanner.skiptoside=Skip to side navigation.
+label.topbanner.skiptomain=Skip to main content.
+label.topbanner.index.hint=Return to site home page.
+label.topbanner.browseralert=<strong>Note:</strong> You are experiencing only the raw content of this site, without the intended layout and design. Either your browser has ignored the Cascading Style Sheet (CSS) files for this site, or you are using an outdated browser which does not support Web Standards.
+label.topbanner.copyright=EDS and the EDS logo are registered trademarks of Hewlett-Packard Development Company, LP.<br/> &copy; 2008 Hewlett-Packard Development Company, LP.
+label.topbanner.edsinternal=Unless otherwise noted, all information contained in this site is considered <strong><a href="http://www.security.eds.com/edssec/awareness/info_handling/information_handling_classifications.aspx">EDS Internal</a></strong> <br />and is intended for distribution to HP and EDS, an HP company, employees<span class="code">,  authorized contractors and/or vendors only</span>. 
+
+# -- Contact us --
+label.contact.heading=We hope hearing from you
+label.contact.body=For more information about this application, please contact Rodrigo Malara (rodrigo.malara@eds.com) or Brent Brown (brent.brown@eds.com)
+
+# -- About --
+label.about.heading=Log searching application
+label.about.body=This application is targeted to connecting to a remotely available Web service that provides an open interface to Cisco Secure ACS logs using a query engine, capable of optimizing the customized searches by using caching mechanisms.
+
+# -- Logs Search Parameters Screen --
+label.searchlogs.title=TACACS Administration Logs Search
+label.searchlogs.help=Fill in with the search criteria below
+label.searchlogs.dateperiod=Date Period
+label.searchlogs.userid=TACACS User ID
+label.searchlogs.email=User e-mail address
+label.searchlogs.deviceIP=Device IP address
+label.searchlogs.outputType.label=Output Type
+label.searchlogs.outputType.CSV=Comma-separated values (CSV)
+label.searchlogs.outputType.MSExcel=MS Excel
+label.searchlogs.hosts=Select the host(s)
+label.searchlogs.dateperiod.today=Today
+button.searchlogs.submit=Generate Report
+error.searchlogs.outputType.select=Please, select an output type
+error.searchlogs.startDate=Please provide a valid initial date. It cannot be empty.
+error.searchlogs.endDate=Please provide a valid end date. It cannot be empty.
+error.searchlogs.deviceIP=Device IP address is invalid. It must follow the form 4 octets rule e.g. 172.16.0.1
+error.searchlogs.outputType.oneMoreFilterMSExcel=Please enter at least one filter parameter to use MS Excel format, otherwise use CSV format.
+msg.searchlogs.startDate=You must enter an initial date for the search 
+msg.searchlogs.endDate=You must enter an end date for the search
+param.searchlogs.dateformat=MM/dd/yyyy
+
+# -- POI Report -- 
+label.searchLogsReport.startDate=Start Date
+label.searchLogsReport.endDate=End Date
+label.searchLogsReport.environment=Environ.
+error.searchLogsReport.resultTooBig=Result set is too big: 
+
+# -- Usage Report
+label.usagereport.title=Usage Report
+label.usagereport.outputType.HTML=HTML
+label.usagereport.status=Status
+label.usagereport.lastlogin=Last Login
+config.usagereport.tablesize=20
+
+# -- Activity Log Report
+label.activitylogreport.menutitle=Activity Logs Report
+label.activitylogreport.title=CS Automation User Activity Logs Report
+label.activitylogreport.when=When ?
+label.activitylogreport.who=Who ?
+label.activitylogreport.what=Activity performed
+label.activitylogreport.role=Role
+message.activitylogreport.howto1=This report shows the tasks performed using CS Automation System for auditing purposes.
+message.activitylogreport.howto2=Currently there are two types of actors: administrators and the timer service. They can be filtered out by using the Role field.
+
+#-- Reports
+label.reports.title=Cisco Secure ACS Reports
+label.reports.body=Reports gathered from information captured from logs local CS Automation database. 
+label.reports.tacacsadm=Admin. logs search
+
+# -- User Maintenance
+label.usermaint.title=User Maintenance
+label.usermaint.body=All changes done in this section are automatically replicated to Cisco Secure ACS using database synchronization features. Please select an option on the menu beside.
+label.usermaint.usernotfound=User not found on the database.
+label.usermaint.changepassword=Change password
+label.usermaint.doenableuser=Enable user
+label.usermaint.dodisableuser=Disable user
+label.usermaint.operations=Operations
+label.usermaint.userenabled=The user {0} was enabled on Cisco Secure ACS
+label.usermaint.userdisabled=The user {0} was disabled on Cisco Secure ACS
+message.usermaint.howto1=Information:
+message.usermaint.howto2=All changes performed using this screen are automatically sent to Cisco Secure ACS
+message.usermaint.howto3=Use the <strong>&#37;</strong> character as a wild card on searches.
+label.usermaint.status.expireddate=Expired (date)
+label.usermaint.status.expiredwrongatt=Expired (wrong attempts)
+
+config.usermaint.tablesize=50
+config.usermaint.pwddropdown=false
+
+# -- Reset Password
+label.usermaint.username=User-Name
+label.resetpassword.title=Password reset
+label.resetpassword.password=New Password
+label.resetpassword.submitted=Password reset submitted to Cisco Secure.
+label.resetpassword.randomgeneratedselect=The first is randomly generated
+label.resetpassword.randomgenerated=This suggestion is randomly generated
+# -- Change Group
+label.groupchange.title=Change group
+label.groupchange.group=New Group
+label.groupchange.enablepassword=Enable password (if applicable)
+label.groupchange.submitted=Group change submitted to Cisco Secure.
+
+# -- Change User's Status
+label.changestatus.title=Change user's status
+label.changestatus.status=New Status
+label.changestatus.enabled=Enabled
+label.changestatus.disabled=Disabled
+label.changestatus.submitted=User's status change submitted to Cisco Secure.
+
+# -- Add/Edit User
+label.adduser.title=Add user
+label.adduser.fullname=Full Name
+label.adduser.groupname=Group
+label.adduser.description=Description
+label.adduser.reviewer=Reviewer
+label.adduser.email=E-mail
+label.adduser.submitted=New user submitted to Cisco Secure.
+label.edituser.submitted=User changes submitted to Cisco Secure.
+label.edituser.title=Edit user
+label.edituser.laststatus=Last Status
+
+# -- Change Reviewer
+label.reviewerchange.title=Change reviewer
+label.reviewerchange.reviewer=New reviewer
+label.reviewerchange.submitted=Reviewer change submitted to Cisco Secure.
+
+# -- Remove user
+label.removeuser.title=Remove user
+label.removeuser.submitted=User removal submitted to Cisco Secure.
+
+# -- Mass Upload Users
+label.massuploadusers.title=Mass Upload Users
+message.massuploadusers.howto1=Procedure for uploading users:
+message.massuploadusers.howto2=Download the MS-Excel file template below and fill it following the instructions inside it.
+message.massuploadusers.howto3=Select the reviewer who is requesting the upload and the file that you just filled in on the <strong>File</strong> field below.
+message.massuploadusers.howto4=Click the <strong>Upload</strong> button
+message.massuploadusers.howto5=The information gotten from the file will be shown. If that's ok, click on the 'Submit' button.
+message.massuploadusers.submitted={0} users uploaded to Cisco Secure.
+label.massuploadusers.filedownload=to download the template &nbsp;
+label.massuploadusers.filename=File name
+label.massuploadusers.initialpassword=Initial Password
+label.massuploadusers.userok=Ok to add ?
+
+# -- Reviewer Maintenance
+label.reviewermaint.title=Reviewer maintenance
+label.reviewermaint.emptyreviewerid=Cannot proceed without a reviewer id. Please contact the SA.
+label.reviewermaint.removesubmitted=Reviewer removal submitted.
+label.reviewermaint.email=E-mail address
+label.reviewermaint.name=Name
+label.reviewermaint.update=Update Reviewer
+label.reviewermaint.insert=Insert Reviewer
+hint.reviewermaint.insert=Add reviewer
+message.reviewermaint.updatewarning=All associates for this reviewer will be updated on Cisco Secure. Do you really want to proceed ?
+config.reviewermaint.tablesize=20
+# -- Audit Maintenance
+label.auditmaint.title=Manager Audit
+label.auditmaint.body=This area is targeted to Manager auditing process automation. All changes done in this section are automatically replicated to Cisco Secure ACS using database synchronization features. Please select an option on the menu beside.
+label.auditmaint.status=Status
+label.auditmaint.status.allanswered=All Answered
+label.auditmaint.status.responsepending=Response Pending
+
+# -- Confirm Associates
+label.assocconfirm.title=Associates Confirmation
+label.assocconfirm.keep=Keep ?
+label.assocconfirm.fullname=Full Name
+label.assocconfirm.groupname=Group Name
+label.assocconfirm.submitted=Associates' status updated on Cisco Secure.
+label.assocconfirm.alreadyconfirmed=Your associate's status was already submitted to the system. Please wait until next audit.
+label.assocconfirm.nullrevaudit=The audit was removed from the database. Please contact the administrators. 
+label.assocconfirm.notyouraudit=Your e-mail on the directory system is different from the e-mail on this audit request so we couldn't authenticate you in this particular audit. This usually happens if you are trying to enter an audit that wasn't directed to you. Please contact the administrators.
+message.assocconfirm.howto1=Procedure for confirming associate's status:
+message.assocconfirm.howto2=Validate if you are the reviewer for the associates below. If not, change the '<strong>Reviewer</strong>' name in the select box.
+message.assocconfirm.howto3=Check if associates access shall be kept. If not, clear the '<strong>Keep ?</strong>' checkbox. Users not kept will be deleted from both systems.
+message.assocconfirm.howto4=Scroll down to the end of the page and click on '<strong>Submit</strong>'.
+label.auditmaint.confirmauditcreate=The system is about to send e-mails to all reviewers. Do you really want to proceed ? 
+
+# -- Confirm Group Members
+label.groupmemberconfirm.title=Group Members Confirmation
+label.groupmemberconfirm.keep=Keep ?
+label.groupmemberconfirm.fullname=Full Name
+label.groupmemberconfirm.groupname=Group Name
+label.groupmemberconfirm.submitted=Associates' group membership updated on Cisco Secure.
+label.groupmemberconfirm.alreadyconfirmed=This group audit was already submitted to the system. Please wait until next audit.
+label.groupmemberconfirm.nullrevaudit=The group audit was removed from the database. Please contact the administrators. 
+label.groupmemberconfirm.notyouraudit=Your e-mail on the directory system is different from the e-mail on this audit request so we couldn't authenticate you in this particular audit. This usually happens if you are trying to enter an audit that wasn't directed to you. Please contact the administrators.
+message.groupmemberconfirm.howto1=Procedure for confirming associate's membership:
+message.groupmemberconfirm.howto2=Check if associates' membership into this group shall be kept. If not, clear the '<strong>Keep ?</strong>' checkbox. Users not kept will be deleted from both systems.
+message.groupmemberconfirm.howto3=Scroll down to the end of the page and click on '<strong>Submit</strong>'.
+
+# -- Batch Change Reviewers
+label.batchchgreviewer.title=Batch Change Reviewers
+message.batchchgreviewer.howto1=Procedure for changing reviewers in batch:
+message.batchchgreviewer.howto2=Select the reviewer on the drop down list. Reviewer's associates will be shown.
+message.batchchgreviewer.howto3=Validate the reviewers for the associates shown and change them if required.
+message.batchchgreviewer.howto4=Scroll down to the end of the page and click on '<strong>Submit</strong>'.
+label.batchchgreviewer.submitted=Associate's reviewer information updated on Cisco Secure.
+
+# -- Create Audit
+label.createaudit.title=Create Manager Audit
+label.auditmaint.description=Description
+label.auditmaint.creationdate=Creation Date
+label.auditmaint.reviewers=Reviewers list
+label.createaudit.submitted=Audit submitted to the system. E-mails sent to all reviewers.
+message.createaudit.howto1=What happens when the administrator creates an audit:
+message.createaudit.howto2=The system will send an e-mail to each reviewer asking them to confirm their associates.
+message.createaudit.howto3=The system will keep track if reviewers confirmed their associates and when they did it.
+message.createaudit.howto4=If needed, the administrator can go to Verify Audits to see the status of a created audit.
+
+# -- Verify Audit
+label.verifyaudit.title=Verify Manager Audit
+label.verifyaudit.submitted=Audit updated on the system. E-mails sent to reviewers that didn't confirm their associates yet.
+label.verifyaudit.totalreviewers=Total of Reviewers
+label.verifyaudit.confirmedreviewers=Reviewers who confirmed
+label.verifyaudit.lastsenddate=Last Send Date
+label.verifyaudit.confirmationdate=Confirmation Date
+label.verifyaudit.resendcount=Resend count
+label.verifyaudit.totalassociates=# of associates
+label.verifyaudit.responsestatus=Response Status
+message.verifyaudit.howto1=Use this feature to:
+message.verifyaudit.howto2=Check reviewer's confirmation status.
+message.verifyaudit.howto3=Select an audit for resending e-mails to reviewers that didn't confirm their associates to the moment.
+message.verifyaudit.howto4=Confirm audit confirmation by each reviewer.
+message.verifyaudit.howto5=If appropriate, click on 'Resend E-mails' to ask the non-responding reviewers to confirm their associates.
+button.verifyaudit.resendemails=Resend E-mails
+config.verifyaudit.reviewaudittablesize=10
+
+# -- Enabled status information
+label.enabledstatus.title=Why bother with user status ?
+label.enabledstatus.body=There are various status for a user on Cisco Secure ACS system but there are technical problems in getting them. The only status that can be trusted is the DISABLED. EXPIRED by date limit, too much wrong attempts or because the user does not login for a long time is impossible to get in this current release of Cisco Secure ACS. In that way, everyone is enabled unless the status DISABLED is found.
+
+# -- Domain admin --
+label.adddomain.title=Add drop down value
+label.adddomain.domain=Field
+label.adddomain.description=Description
+label.adddomain.value=Option
+
+label.deldomain.title=Remove drop down value
+label.deldomain.success=Value removed from database
+label.deldomain.failure=Value cannot be removed. It is being used by other records.
+label.deldomain.confirm=Do you really want to remove the selected option ?
+label.deldomain.info=If the option is still used by other records, the removal will not be done.
+
+label.maintdomain.loaded={0} options loaded into the database under domain {1}.
+label.maintdomain.values=Values
+
+# -- Group Audit Navigation
+label.groupaudit.title=Group Audit
+label.groupaudit.body=This area is targeted to Group Audit process automation. All changes done in this section are automatically replicated to Cisco Secure ACS using database synchronization features. Please select an option on the menu beside.
+
+# -- Create Group Audit
+label.creategroupaudit.title=Create Group Audit
+label.creategroupaudit.description=Description
+label.creategroupaudit.creationdate=Creation Date
+label.creategroupaudit.confirmauditcreate=The system is about to send e-mails to primary reviewers below. Do you really want to proceed ?
+label.creategroupaudit.groups=Groups with valid reviewers
+label.creategroupaudit.primaryreviewer=Primary Reviewer
+label.creategroupaudit.secondaryreviewer=Secondary Reviewer
+label.creategroupaudit.submitted=Group Audit submitted to the system. E-mails sent to all reviewers.
+message.creategroupaudit.howto1=What happens when the administrator creates an audit:
+message.creategroupaudit.howto2=The system will send an e-mail to each primary reviewer asking them to confirm group members.
+message.creategroupaudit.howto3=The system will keep track if reviewers confirmed their group members and when they did it.
+message.creategroupaudit.howto4=If needed, the administrator can go to Verify Group Audits to see the status of a created audit.
+
+# -- Verify Group Audit
+label.verifygroupaudit.title=Verify Group Audit
+label.verifygroupaudit.submitted=Audit updated on the system. E-mails sent to group reviewers whose members weren't confirmed yet.
+label.verifygroupaudit.selectdestination=Please select which reviewer will receive the e-mails on the radio button below.
+label.verifygroupaudit.totalgroups=Total of Groups
+label.verifygroupaudit.confirmedgroups=Groups confirmed
+label.verifygroupaudit.lastsenddate=Last Send Date
+label.verifygroupaudit.confirmationdate=Confirmation Date
+label.verifygroupaudit.resendcountprimary=Send count 1y
+label.verifygroupaudit.resendcountsecondary=Send count 2y
+label.verifygroupaudit.memberamount=# of members
+label.verifygroupaudit.responsestatus=Response Status
+label.verifygroupaudit.lastsenddateprimary=Last Send Date 1y
+label.verifygroupaudit.lastsenddatesecondary=Last Send Date 2y
+label.verifygroupaudit.reviewers=Primary (1y) &amp; Secondary (2y) reviewers
+label.verifygroupaudit.sendto=Choose to whom e-mails will be sent
+label.verifygroupaudit.primaryreviewers=Primary reviewers
+label.verifygroupaudit.secondaryreviewers=Secondary reviewers
+message.verifygroupaudit.howto1=Use this feature to:
+message.verifygroupaudit.howto2=Check group members' confirmation status.
+message.verifygroupaudit.howto3=Select an audit for resending e-mails to group reviewers whose didn't confirm group's members to the moment.
+message.verifygroupaudit.howto4=Check audit request fulfillment by each group reviewer.
+message.verifygroupaudit.howto5=If appropriate, select to whom e-mails shall be sent, primary or secondary reviewers, and click on 'Resend E-mails' to resend group audit requests.
+button.verifygroupaudit.resendemails=Resend E-mails
+config.verifygroupaudit.reviewaudittablesize=10
+
+
+# -- Maintain Groups Audit
+label.maintaingroups.title=Maintain Groups
+label.maintaingroups.primaryreviewer=Primary (1y) Reviewer
+label.maintaingroups.secondaryreviewer=Secondary (2y) Reviewer
+label.maintaingroups.groupnotfound=Group not found on the database.
+label.maintaingroups.sendauditreqtopri=Send pending audit requests to <strong>new</strong> primary reviewers.
+label.maintaingroups.sendauditreqtosec=Send pending audit requests to <strong>new</strong> secondary reviewers.
+message.maintaingroups.howto1=Information:
+message.maintaingroups.howto2=All changes performed using this screen are automatically sent to Cisco Secure ACS
+message.maintaingroups.howto3=Use the <strong>&#37;</strong> character as a wild card on searches.
+config.maintaingroups.tablesize=50
+
+label.editgroup.title=Edit Group
+label.editgroup.submitted=Group changes successfully performed.
+label.editgroup.warnopenaudit=There are {0} open audits and changing the reviewer will cause audit requests to be sent to new reviewers. Do you want to continue ?
+message.editgroup.howto1=When a reviewer is changed, if there are open audits for the current group: 
+message.editgroup.howto2=Only primary reviewer changed: E-mails will be sent requesting new reviewer to fulfill the audit request.
+message.editgroup.howto3=Only secondary reviewer changed: If there are open audits for the current group and if secondary reviewers were asked to answer the audit then the system will send audit request to secondary reviewer.
+message.editgroup.howto4=Both reviewers changed: Resend audit requests to the primary reviewer.

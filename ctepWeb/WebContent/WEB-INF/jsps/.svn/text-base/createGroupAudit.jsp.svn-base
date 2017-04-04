@@ -1,0 +1,65 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+
+<script language="Javascript" 
+  src="<%=request.getContextPath()%>/com/js/validation.js"></script>
+<script language="Javascript1.2" type="text/javascript">
+	<!--//
+	var msgIsEmpty = '<bean:message key="errors.isempty" />';
+	var confirmProceed = '<bean:message key="label.creategroupaudit.confirmauditcreate" />';
+	var descriptionLabel = '<bean:message key="label.creategroupaudit.description" />';
+	
+	var descriptionIsEmpty = msgIsEmpty.replace(/#0#/,"'" + descriptionLabel + "'");
+	
+	function validate() {
+    if (document.forms[0].elements["groupAudit.description"].value.length < 1) {
+      alert(descriptionIsEmpty);
+      document.forms[0].elements["groupAudit.description"].focus();
+      return false;
+    }
+    if (!confirm(confirmProceed)) {
+        return false;
+    }
+    return true;
+	}
+	//-->
+</script>
+<h2><bean:message key="label.creategroupaudit.title" /></h2>
+
+  <logic:present name="groups">
+    <ul class="desc" style="width: 85%">
+    <li><strong><bean:message key="message.creategroupaudit.howto1" /></strong></li>
+    <li><bean:message key="message.creategroupaudit.howto2" /></li>
+    <li><bean:message key="message.creategroupaudit.howto3" /></li>
+    <li><bean:message key="message.creategroupaudit.howto4" /></li>
+    </ul>
+
+    <html:form action="/audit/groupAudit.do?method=submitCreate">
+      <html:hidden property="menuStyleId"/>
+      <table border="0">
+        <tr>
+          <td><bean:message key="label.creategroupaudit.description" /></td>
+          <td><html:text property="groupAudit.description" maxlength="200" size="50" /></td>
+        </tr>
+      </table>
+
+      <p class="buttons"><html:submit styleClass="submit"
+        onclick="return validate();">
+        <bean:message key="label.submit" />
+      </html:submit></p>
+    </html:form>
+
+    <h3><bean:message key="label.creategroupaudit.groups" /></h3>
+
+    <display:table id="row" name="groups" 
+      requestURI="/audit/groupAudit.do?method=listGroupAudits&menuStyleId=listGroupAudits">
+      <display:column property="groupName" titleKey="label.adduser.groupname" />
+      <display:column property="primaryReviewer.email" titleKey="label.creategroupaudit.primaryreviewer" /> 
+      <display:column property="secondaryReviewer.email" titleKey="label.creategroupaudit.secondaryreviewer" />
+    </display:table>
+  </logic:present>
+
+
+

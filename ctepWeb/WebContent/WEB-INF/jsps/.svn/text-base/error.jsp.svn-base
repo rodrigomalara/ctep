@@ -1,0 +1,10 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@ page import="org.apache.struts.Globals" %>
+<h3><bean:message key="global.error.message" /></h3>
+<p class="buttons">
+ 	<html:submit styleClass="submit" onclick="javascript:history.back();">
+ 		<bean:message key="label.back"/>
+ 	</html:submit>
+</p>

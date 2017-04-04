@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <Server port="8005" shutdown="SHUTDOWN">
+  <Listener className="org.apache.catalina.startup.VersionLoggerListener"/>
+  <Listener SSLEngine="on" className="org.apache.catalina.core.AprLifecycleListener"/>
+  <!-- Prevent memory leaks due to use of particular java/javax APIs-->
+  <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener"/>
+  <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener"/>
+  <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener"/>
+
+  <GlobalNamingResources>
+  
+    <Resource auth="Container" mail.debug="false" mail.from="servico@gourmex.com"
+      mail.smtp.auth="true" mail.smtp.host="smtp.gmail.com" mail.smtp.port="465"
+      mail.smtp.socketFactory.class="javax.net.ssl.SSLSocketFactory"
+      mail.smtp.ssl.enable="true" mail.smtp.starttls.enable="true"
+      mail.smtp.user="servico@gourmex.com" name="mail/Session"
+      password="4792V812" type="javax.mail.Session"/>
+    
+    <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" logAbandoned="true"
+      maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/ctepDB" password="1234"
+      removeAbandoned="true" removeAbandonedTimeout="60" testOnBorrow="true"
+      type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/ctep" username="root"
+      validationQuery="SELECT 1"/>
+  
+  </GlobalNamingResources>
+
+  <Service name="Catalina">
+    <Connector connectionTimeout="20000" port="8080" protocol="HTTP/1.1" />
+    
+    <Engine defaultHost="localhost" name="Catalina">
+      <Host appBase="webapps" autoDeploy="true" name="localhost" unpackWARs="true">
+        <Context docBase="ctepWeb" path="/ctepWeb" reloadable="true" source="org.eclipse.jst.j2ee.server:ctepWeb">
+          <ResourceLink global="mail/Session" name="mail/Session" type="javax.mail.Session"/>
+          <ResourceLink global="jdbc/ctepDB" name="jdbc/ctepDB" type="javax.sql.DataSource"/>
+        </Context>
+      </Host>
+    </Engine>
+  </Service>
+</Server>

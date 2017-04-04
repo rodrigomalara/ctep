@@ -1,0 +1,134 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ page import="com.eds.gne.ciscosecure.entities.jpa.Group"%>
+
+<script language="Javascript" src="<%=request.getContextPath()%>/com/js/validation.js"></script>
+<script language="Javascript1.2" type="text/javascript">
+	<!--//
+	var msgIsEmpty = '<bean:message key="errors.isempty" />';
+	var msgInvalidEmail = '<bean:message key="errors.invalidEmail" />';
+	
+	var groupLabel = '<bean:message key="label.adduser.groupname" />';
+  var priReviewerLabel = '<bean:message key="label.maintaingroups.primaryreviewer" />';
+	var priReviewerIsEmpty = msgIsEmpty.replace(/#0#/,"'" + priReviewerLabel + "'");
+
+	var origPriReviewer = '<bean:write property="primaryReviewerId" name="FormGroup" />';
+	var origSecReviewer = '<bean:write property="secondaryReviewerId" name="FormGroup" />';
+
+	var openAudits = '<bean:message key="label.editgroup.warnopenaudit" />';
+	
+	
+	function validate() {
+		var priRevIdElt = document.forms['FormGroup'].elements["primaryReviewerId"];
+		var secRevIdElt = document.forms['FormGroup'].elements["secondaryReviewerId"];
+		var msgOpenAudits = openAudits.replace(/\{0\}/,"'" + 
+			      document.forms['FormGroup'].elements["openGroupAudits"] +
+			      "'");
+
+    if (priRevIdElt.value.length < 1) {
+     		alert(priReviewerIsEmpty);
+     		priRevIdElt.focus();
+     		return false;
+    }
+    if (secRevIdElt.value.length < 1) {
+     		alert(secReviewerIsEmpty);
+     		secRevIdElt.focus();
+     		return false;
+    }
+    var openGAElt = document.forms['FormGroup'].elements["openGroupAudits"];
+    var auditSecRev = document.forms['FormGroup'].elements["auditSentToSecReviewers"]; 
+    if (openGAElt.value > 0) {
+    	  if ((origPriReviewer != priRevIdElt.value 
+    	    	  || origSecReviewer != secRevIdElt.value) 
+    	    	  && !confirm(msgOpenAudits)) {
+        	  return false;
+    	  }
+    }
+    return true;
+	}
+
+	function back() {
+		document.forms['FormGroup'].action = '<%=request.getContextPath()%>/group/groupMaint.do?method=list';
+		document.forms['FormGroup'].submit();
+	}
+	//-->
+</script>
+
+<h2><bean:message key="label.editgroup.title" /></h2>
+<ul class="desc" style="width: 85%">
+  <li><strong><bean:message key="message.editgroup.howto1" /></strong></li>
+  <li><bean:message key="message.editgroup.howto2" /></li>
+  <li><bean:message key="message.editgroup.howto3" /></li>
+  <li><bean:message key="message.editgroup.howto4" /></li>
+</ul>
+<html:form action="/group/groupMaint.do?method=submitEditGroup">
+  <html:hidden property="group.groupId" />
+  <html:hidden property="group.groupName" />
+  <html:hidden property="menuStyleId" />
+  <html:hidden property="openGroupAudits" />
+  <html:hidden property="auditSentToSecReviewers" />
+	<table border="0">
+		<tr>
+			<td><bean:message key="label.adduser.groupname" /></td>
+			<td><bean:write property="group.groupName" name="FormGroup" /></td>
+		</tr>
+    <tr>
+      <td><bean:message key="label.maintaingroups.primaryreviewer" /></td>
+      <td>
+        <html:select property="primaryReviewerId">
+          <html:option value=""></html:option>
+          <html:optionsCollection property="reviewers" label="email" value="reviewerId" />
+        </html:select>
+      </td>
+    </tr>
+    <tr>
+      <td><bean:message key="label.maintaingroups.secondaryreviewer" /></td>
+      <td>
+        <html:select property="secondaryReviewerId">
+          <html:option value=""></html:option>
+          <html:optionsCollection property="reviewers" label="email" value="reviewerId" />
+        </html:select>
+      </td>
+    </tr>
+    <logic:greaterThan name="FormGroup" property="openGroupAudits" value="0">
+      <logic:equal name="FormGroup" property="auditSentToSecReviewers" value="false">
+    <tr>
+      <td>
+        <bean:message key="label.maintaingroups.emailresend" />
+      </td>
+      <td>
+        <html:checkbox property="resendAuditReqTo" value="primary">
+          <bean:message key="label.maintaingroups.sendauditreqtopri" />
+        </html:checkbox>
+      </td>
+    </tr>
+      </logic:equal>
+      <logic:equal name="FormGroup" property="auditSentToSecReviewers" value="true">
+    <tr>
+      <td>
+        <bean:message key="label.maintaingroups.emailresend" />
+      </td>
+      <td>
+        <html:radio property="resendAuditReqTo" value="primary">
+          &nbsp;<bean:message key="label.maintaingroups.sendauditreqtopri" />
+        </html:radio>
+        <br/>
+        <html:radio property="resendAuditReqTo" value="secondary">
+          &nbsp;<bean:message key="label.maintaingroups.sendauditreqtosec" />
+        </html:radio>
+      </td>
+    </tr>
+      </logic:equal>
+    </logic:greaterThan>
+	</table>
+
+  <p class="buttons">
+	  <html:submit styleClass="submit" onclick="return validate();">
+		  <bean:message key="label.submit" />
+	  </html:submit>
+    <html:button property="" styleClass="submit" onclick="back();">
+      <bean:message key="label.back" />
+    </html:button>
+  </p>
+</html:form>

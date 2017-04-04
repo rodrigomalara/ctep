@@ -1,0 +1,92 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<script language="Javascript" src="<%=request.getContextPath()%>/com/js/validation.js"></script>
+<script language="Javascript">
+<!--
+var msgUpdateWarning = '<bean:message key="message.reviewermaint.updatewarning"/>';
+var msgInvalidEmail = '<bean:message key="errors.invalidEmail" />';
+var msgFieldEmpty = '<bean:message key="errors.isempty" />';
+
+var emailLabel = '<bean:message key="label.reviewermaint.email" />';
+var nameLabel = '<bean:message key="label.reviewermaint.name" />';
+var emailInvalid = msgInvalidEmail.replace(/#0#/,"'" + emailLabel + "'");
+var nameInvalid = msgFieldEmpty.replace(/#0#/,"'" + nameLabel + "'");
+
+var origEmail; // to be filled at the end of this page
+
+function cancelOperation() {
+	document.forms[0].action = "reviewerMaint.do?method=listReviewers";
+	document.forms[0].submit();
+}
+function submitOperation() {
+	if (document.forms[0]["reviewer.email"].value == null ||
+		  document.forms[0]["reviewer.email"].value.length < 1 ||
+		  !emailValidation(document.forms[0]["reviewer.email"].value)) {
+		    alert(emailInvalid);
+		    return false;
+	}
+
+	if (document.forms[0]["reviewer.name"].value == null ||
+		  document.forms[0]["reviewer.name"].value.length < 1) {
+		    alert(nameInvalid);
+		    return false;
+	}
+
+	// Get a confirmation from the user if he wants to 
+	// update all associates information
+	if (document.forms[0]["method"].value == 'update' &&
+			document.forms[0]["reviewer.email"].value != origEmail) {
+		if(!confirm(msgUpdateWarning)) {
+			return false;
+		}
+	}
+	
+	document.forms[0].action = "reviewerMaint.do?method=" + document.forms[0].elements['method'].value;
+	document.forms[0].submit();
+	return false;
+}
+-->
+</script>
+
+<logic:equal value="insert" property="method" name="FormReviewer">
+  <h2><bean:message key="label.reviewermaint.insert" /></h2>
+</logic:equal>
+<logic:notEqual value="insert" property="method" name="FormReviewer">
+  <h2><bean:message key="label.reviewermaint.update" /></h2>
+</logic:notEqual>
+
+<html:form action="/users/reviewerMaint.do" focus="reviewer.email" method="POST">
+	<html:hidden property="reviewer.reviewerId"/>
+	<html:hidden property="method"/>
+	<table>
+    <tr>
+      <td>
+        <label for="reviewer.name"><bean:message key="label.reviewermaint.name"/></label>
+      </td>
+      <td>
+        <html:text property="reviewer.name" size="40" maxlength="100" />
+      </td>
+    </tr>
+		<tr>
+			<td>
+				<label for="reviewer.email"><bean:message key="label.reviewermaint.email"/></label>
+			</td>
+			<td>
+				<html:text property="reviewer.email" size="40" maxlength="100" />
+			</td>
+		</tr>
+	</table>
+	
+	<html:button property="save" onclick="submitOperation();" styleClass="submit">
+		<bean:message key="label.submit" />
+	</html:button>
+	<html:button property="cancel" onclick="cancelOperation();" styleClass="submit">
+		<bean:message key="label.cancel" />
+	</html:button>
+  <script language="Javascript">
+  <!--
+  origEmail = '<bean:write property="reviewer.email" name="FormReviewer" />';
+  -->
+  </script>
+</html:form>

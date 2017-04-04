@@ -1,0 +1,34 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
+  <!-- START sidebar -->
+
+    <div id="sidebar">
+      <div id="sidenav">
+      <ul>
+        <li>
+          <html:link action="group/groupMaint.do?method=list&menuStyleId=list"  styleId="list" >
+            <bean:message key="label.maintaingroups.title"/>
+          </html:link>
+        </li>
+        <li>
+          <html:link action="audit/groupAudit.do?method=prepareCreate&menuStyleId=prepareCreate"  styleId="prepareCreate" >
+            <bean:message key="label.creategroupaudit.title"/>
+          </html:link>
+        </li>
+        <li>
+          <html:link action="audit/groupAudit.do?method=listGroupAudits&menuStyleId=listGroupAudits"  styleId="listGroupAudits" >
+            <bean:message key="label.verifygroupaudit.title"/>
+          </html:link>
+        </li>
+      </ul>
+      </div>
+      <script type="text/javascript">
+      <!--//
+      <% if (request.getParameter("menuStyleId") != null) { %>
+    	sidenav('<%=request.getParameter("menuStyleId")%>','');
+    	<% } %>
+      //-->
+      </script>
+    </div>
+  <!-- END sidebar -->

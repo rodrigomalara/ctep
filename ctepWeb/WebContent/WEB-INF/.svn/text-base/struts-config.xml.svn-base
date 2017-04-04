@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+          "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+<struts-config>
+<!-- ================================================ Form Bean Definitions -->
+
+    <form-beans>
+        <form-bean
+            name="FormSearchLogs"
+            type="com.eds.gne.ciscosecure.search.forms.FormSearchLogs"/>
+        <form-bean
+            name="FormUsageReport"
+            type="com.eds.gne.ciscosecure.search.forms.FormUsageReport"/>
+        <form-bean
+            name="FormUser"
+            type="com.eds.gne.ciscosecure.users.forms.FormUser"/>
+        <form-bean
+            name="FormReviewer"
+            type="com.eds.gne.ciscosecure.users.forms.FormReviewer"/>
+        <form-bean
+            name="FormAssocConfirm"
+            type="com.eds.gne.ciscosecure.audit.forms.FormAssocConfirm"/>
+        <form-bean
+            name="FormAudit"
+            type="com.eds.gne.ciscosecure.audit.forms.FormAudit"/>
+        <form-bean
+            name="FormGroupAudit"
+            type="com.eds.gne.ciscosecure.audit.forms.FormGroupAudit"/>
+        <form-bean
+            name="FormActivityLog"
+            type="com.eds.gne.ciscosecure.search.forms.FormActivityLog"/>
+        <form-bean
+            name="FormMassUploadUsers"
+            type="com.eds.gne.ciscosecure.users.forms.FormMassUploadUsers"/>
+        <form-bean
+            name="FormDomain"
+            type="com.eds.gne.ciscosecure.global.forms.FormDomain"/>
+        <form-bean
+            name="FormGroup"
+            type="com.eds.gne.ciscosecure.groups.forms.FormGroup"/>
+        <form-bean
+            name="FormGroupMemberConfirm"
+            type="com.eds.gne.ciscosecure.audit.forms.FormGroupMemberConfirm"/>
+    </form-beans>
+
+
+<!-- ========================================= Global Exception Definitions -->
+
+    <global-exceptions>
+    	<exception 
+    		handler="com.eds.gne.ciscosecure.search.actions.ExceptionHandlerAction"
+            key="global.error.message"
+            type="java.lang.Exception"
+            path="error">
+        </exception>
+    </global-exceptions>
+
+
+<!-- =========================================== Global Forward Definitions -->
+
+    <global-forwards>
+        <forward
+            name="error"
+            path=".error"/>
+        <forward
+            name="notAllowed"
+            path="/nav.do?target=notAllowed"/>
+    </global-forwards>
+
+
+<!-- =========================================== Action Mapping Definitions -->
+
+    <action-mappings>
+		    <action
+            path="/reports/searchLogs"
+            type="com.eds.gne.ciscosecure.search.actions.SearchLogsDispatchAction"
+            name="FormSearchLogs"
+            parameter="method"
+            scope="request"
+            validate="false"
+            input="/WEB-INF/jsps/searchLogsParam.jsp">
+            <forward name="input" path=".searchLogsParam"/>
+         </action>
+         
+         <action
+            path="/nav"
+            type="com.eds.gne.ciscosecure.global.actions.NavigationAction"
+            scope="request"
+            validate="false">
+            <forward name="about" path=".about"/>
+            <forward name="login" path=".login"/>
+            <forward name="logininvalid" path=".logininvalid"/>
+            <forward name="notAllowed" path=".notAllowed"/>
+            <forward name="logout" path=".logout"/>
+            <forward name="contact" path=".contact"/>
+            <forward name="searchLogsParam" path="/searchLogs.do?method=showParamScreen"/>
+            <forward name="userMaint" path=".userMaint"/>
+            <forward name="auditMaint" path=".auditMaint"/>
+            <forward name="groupAudit" path=".groupAudit"/>
+            <forward name="reports" path=".reports"/>
+            <forward name="enabledStatus" path=".enabledStatus"/>
+         </action>
+         
+         <action
+            path="/users/massUploadUsers"
+            type="com.eds.gne.ciscosecure.users.actions.MassUploadUsersDispatchAction"
+            name="FormMassUploadUsers"
+            parameter="method"
+            scope="session"
+            validate="false">
+            <forward name="upload" path=".upload"/>
+            <forward name="confirm" path=".confirm"/>
+         </action>
+         
+         <action
+            path="/users/userMaint"
+            type="com.eds.gne.ciscosecure.users.actions.UserMaintDispatchAction"
+            name="FormUser"
+            parameter="method"
+            scope="request"
+            validate="false">
+            <forward name="displayUsers" path=".displayUsers"/>
+            <forward name="prepChgPasswd" path=".prepChgPasswd"/>
+            <forward name="prepAddUser" path=".prepAddUser"/>
+            <forward name="prepEditUser" path=".prepEditUser"/>
+            <forward name="displayUsersAction" path="/users/userMaint.do?method=list" redirect="true" />
+         </action>
+         
+         <action
+            path="/group/groupMaint"
+            name="FormGroup"
+            parameter="method"
+            scope="request"
+            validate="false">
+            <forward name="displayGroups" path=".displayGroups"/>
+            <forward name="prepEditGroup" path=".prepEditGroup"/>
+            <forward name="displayGroupsAction" path="/group/groupMaint.do?method=list" redirect="true" />
+         </action>
+         
+         <action
+            path="/users/reviewerMaint"
+            type="com.eds.gne.ciscosecure.users.actions.ReviewerMaintDispatchAction"
+            name="FormReviewer"
+            parameter="method"
+            scope="request"
+            validate="false">
+            <forward name="displayReviewers" path=".displayReviewers"/>
+            <forward name="editReviewer" path=".editReviewer"/>
+         </action>
+         
+         <action
+            path="/reports/usageReport"
+            type="com.eds.gne.ciscosecure.search.actions.UsageReportDispatchAction"
+            name="FormUsageReport"
+            parameter="method"
+            scope="request"
+            validate="false">
+            <forward name="usageReport" path=".usageReport"/>
+         </action>
+         
+         <action
+            path="/reports/activityReport"
+            type="com.eds.gne.ciscosecure.search.actions.ActivityLogReportDispatchAction"
+            name="FormActivityLog"
+            parameter="method"
+            scope="request"
+            validate="false">
+            <forward name="activityReport" path=".activityReport"/>
+         </action>
+         
+         <action
+            path="/audit/assocConfirm"
+            type="com.eds.gne.ciscosecure.audit.actions.AssocConfirmDispatchAction"
+            name="FormAssocConfirm"
+            parameter="method"
+            scope="request"
+            validate="false">
+            <forward name="assocConfirm" path=".assocConfirm"/>
+            <forward name="batchChgReviewer" path=".batchChgReviewer" />
+         </action>
+         
+         <action
+            path="/audit/auditMaint"
+            type="com.eds.gne.ciscosecure.audit.actions.AuditMaintDispatchAction"
+            name="FormAudit"
+            parameter="method"
+            scope="request"
+            validate="false">
+            <forward name="createAudit" path=".createAudit"/>
+            <forward name="verifyAudit" path=".verifyAudit"/>
+            <forward name="listAudits" path=".listAudits"/>
+         </action>
+         
+         <action
+            path="/audit/groupAudit"
+            name="FormGroupAudit"
+            parameter="method"
+            scope="request"
+            validate="false">
+            <forward name="createGroupAudit" path=".createGroupAudit"/>
+            <forward name="verifyGroupAudit" path=".verifyGroupAudit"/>
+            <forward name="listGroupAudits" path=".listGroupAudits"/>
+         </action>
+         
+         <action
+            path="/audit/groupConfirm"
+            name="FormGroupMemberConfirm"
+            parameter="method"
+            scope="request"
+            validate="false">
+            <forward name="groupMemberConfirm" path=".groupMemberConfirm"/>
+         </action>
+         
+         <action
+            path="/admin/domainAdmin"
+            type="com.eds.gne.ciscosecure.global.actions.DomainAdminDispatchAction"
+            name="FormDomain"
+            parameter="method"
+            scope="session"
+            validate="false">
+            <forward name="addDomain" path="/WEB-INF/jsps/addDomain.jsp"/>
+            <forward name="loadDomain" path=".loadDomain"/>
+         </action>
+    </action-mappings>
+
+    <controller>
+      <set-property property="processorClass"
+        value="org.springframework.web.struts.DelegatingTilesRequestProcessor"/>
+    </controller>
+
+<!-- ======================================== Message Resources Definitions -->
+
+    <message-resources null="false" parameter="MessageResources" />
+
+
+<!-- =============================================== Plug Ins Configuration -->
+
+  <!-- ======================================================= Tiles plugin -->
+
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+      <set-property property="definitions-config"
+                       value="/WEB-INF/tiles-defs.xml" />
+      <set-property property="definitions-debug" value="2" />
+      <set-property property="definitions-parser-details" value="2" />
+      <set-property property="definitions-parser-validate" value="true" />
+    </plug-in>
+
+
+  <!-- =================================================== Validator plugin -->
+
+  <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+    <set-property
+        property="pathnames"
+        value="/org/apache/struts/validator/validator-rules.xml,
+               /WEB-INF/validation.xml"/>
+  </plug-in>
+  
+  <plug-in className="org.springframework.web.struts.ContextLoaderPlugIn">
+    <set-property property="contextConfigLocation"
+      value="/WEB-INF/action-servlet.xml"/>
+  </plug-in>
+  
+</struts-config>
+

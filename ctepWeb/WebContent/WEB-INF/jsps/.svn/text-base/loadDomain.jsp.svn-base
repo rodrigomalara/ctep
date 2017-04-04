@@ -1,0 +1,48 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<script language="Javascript">
+<!--//
+function submitOperation() {
+	document.forms[0].action = "domainAdmin.do?method=submitBatchLoad";
+	document.forms[0].submit();
+	return false;
+}
+-->
+</script>
+<html:form action="/admin/domainAdmin.do?method=submitBatchLoad" focus="domain.domain" method="POST">
+
+	<table>
+		<tr>
+			<td>
+				<label for="domain.domain"><bean:message key="label.adddomain.domain"/> <span
+					class="accenttext">*</span></label>
+			</td>
+			<td>
+				<html:text property="domain.domain" maxlength="50" size="30" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label for="domain.description"><bean:message key="label.adddomain.description"/> <span
+					class="accenttext">*</span></label>
+			</td>
+			<td>
+				<html:text property="domain.description" maxlength="50" size="30" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label for="values"><bean:message key="label.maintdomain.values"/></label>
+			</td>
+			<td>
+				<html:textarea property="values" rows="10" cols="30" />
+			</td>
+		</tr>
+		<tr>
+	</table>
+
+	<html:button property="save" onclick="submitOperation();" styleClass="submit">
+		<bean:message key="label.submit" />
+	</html:button>
+</html:form>

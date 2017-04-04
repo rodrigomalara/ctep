@@ -1,0 +1,37 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
+  <!-- START sidebar -->
+
+    <div id="sidebar">
+      <div id="sidenav">
+      <ul>
+        <li>
+          <html:link action="users/userMaint.do?method=list"  styleId="list" >
+            <bean:message key="label.usermaint.title"/>
+          </html:link>
+        </li>
+         <li>
+          <html:link action="users/massUploadUsers.do?method=prepareUpload"  styleId="prepareUpload" >
+            <bean:message key="label.massuploadusers.title"/>
+          </html:link>
+        </li>
+        <li>
+          <html:link action="users/reviewerMaint.do?method=listReviewers"  styleId="listReviewers" >
+            <bean:message key="label.reviewermaint.title"/>
+          </html:link>
+        </li>
+      </ul>
+      </div>
+      <script type="text/javascript">
+      <!--//
+      <% if (request.getParameter("method") != null) { %>
+      try {
+    	  sidenav('<%=request.getParameter("method")%>','');
+      } catch(e) {
+      }
+      <% } %>
+      //-->
+      </script>
+    </div>
+  <!-- END sidebar -->

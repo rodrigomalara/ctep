@@ -1,0 +1,72 @@
+.datagrid { height: 100px; width: 100%; _overflow: auto; }
+.datagrid table { background-color: #FFFFFF; width: auto;  font: 11px Arial, Helvetica, sans-serif;
+}
+* html thead tr{
+  position: relative;
+  top: expression(this.parentNode.parentNode.parentNode.scrollTop);
+}
+
+/* Permite a rolagem do TBODY em browsers nao-IE e nao-Mozilla */
+html>body thead tr,
+html>body tbody tr {
+  display: block;
+}
+.col0{
+  background-color: red;
+  border-bottom: 1px solid #CCC;
+  border-left: 1px solid #CCC;
+  border-right: 1px solid #CCC;
+  padding: 2px 3px 2px 4px;
+  _padding: 0px 3px 0px 4px;
+}
+
+/* Formatacao do TH */
+thead th {
+  color: #000000;
+  font-family: verdana;
+  font-weight: bolder;
+  font-size: 11px;
+}
+
+/* Formatacao do A dentro do cabecalho da tabela, permitindo o sorting da tabela  */
+thead a, thead a:link, thead a:visited {
+  color: #666666;
+  display: block;
+  text-decoration: none;
+  width: 100%;
+}
+
+/* Hover do A no cabecalho */
+thead a:hover {
+  text-decoration: underline;
+}
+/* Define a rolagem do conteudo, diminuindo 30 pixels para o controle de rolagem*/
+html>body tbody {
+  display: block;
+  overflow: auto;
+  width: auto;
+}
+
+/* Define propriedades do cabeçalho das tabelas*/
+.header{
+  border:1px solid #ccc;
+  clear:left;
+}
+html>body .datagrid table input {
+  display:block;
+  margin-left: 3px;
+}
+.selecionada{
+  color: black;
+  font-weight: bolder;
+}
+.tituloGrid {
+  width: 150px;!important
+  text-align:center
+} 
+.datagrid table {
+  color: #666666;
+  display: block;
+  text-decoration: none;
+  width: 100%;
+}

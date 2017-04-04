@@ -1,0 +1,60 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+<%@page import="com.eds.gne.ciscosecure.services.AuditFacade.AuditStatus"%>
+
+<script language="Javascript" src="<%=request.getContextPath()%>/com/js/validation.js"></script>
+<script language="Javascript1.2" type="text/javascript">
+	<!--//
+	//-->
+</script>
+<h2><bean:message key="label.verifyaudit.title" /></h2>
+
+
+  <logic:present name="audits">
+    <ul class="desc" style="width: 85%">
+    <li><strong><bean:message key="message.verifyaudit.howto1" /></strong></li>
+    <li><bean:message key="message.verifyaudit.howto2" /></li>
+    <li><bean:message key="message.verifyaudit.howto3" /></li>
+    </ul>
+
+    <html:form action="/audit/auditMaint.do?method=listAudits">
+      <html:hidden property="menuStyleId"/>
+      <strong><bean:message key="label.filters"/></strong>&nbsp;&nbsp;
+      <bean:message key="label.auditmaint.status"/>
+      <html:select property="auditStatus">
+        <html:option value="">
+          <bean:message key="global.all"/>&nbsp;&nbsp;&nbsp;
+        </html:option>
+        <html:option value="<%="" + AuditStatus.RESPONSE_PENDING.getCode()%>">
+          <bean:message key="label.auditmaint.status.responsepending"/>&nbsp;&nbsp;&nbsp;
+        </html:option>
+        <html:option value="<%="" + AuditStatus.ALL_ANSWERED.getCode()%>">
+          <bean:message key="label.auditmaint.status.allanswered"/>&nbsp;&nbsp;&nbsp;
+        </html:option>
+      </html:select>
+
+      <html:submit styleClass="submit" >
+        <bean:message key="button.applyfilters" />
+      </html:submit>
+
+      <display:table id="row" name="audits" 
+        requestURI="/audit/auditMaint.do?method=listAudits&menuStyleId=listAudits">
+        <display:column property="description" titleKey="label.auditmaint.description" />
+        <display:column property="creationDate.time" titleKey="label.auditmaint.creationdate" 
+          format="{0,date,MM-dd-yyyy hh:mm aaa}"/>
+        <display:column property="totalReviewers" titleKey="label.verifyaudit.totalreviewers" /> 
+        <display:column property="confirmedReviewers" titleKey="label.verifyaudit.confirmedreviewers" />
+        <display:column href="auditMaint.do?method=selectAudit&menuStyleId=listAudits" 
+          paramId="auditId" paramProperty="auditId" 
+          titleKey="global.select">
+          <img src="<%=request.getContextPath()%>/com/icons/18/tool.png"/>
+        </display:column>
+      </display:table>
+    </html:form>
+
+  </logic:present>
+
+
+

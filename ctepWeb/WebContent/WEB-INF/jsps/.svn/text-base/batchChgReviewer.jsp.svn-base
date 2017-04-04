@@ -1,0 +1,86 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>
+
+<%@ page import="com.eds.gne.ciscosecure.AppConstants"%>
+<%@ page import="com.eds.gne.ciscosecure.entities.jpa.CSUser"%>
+<%@ page import="java.util.*" %>
+	<!-- HTML Results -->
+<script language="Javascript" src="<%=request.getContextPath()%>/com/js/tigra_hints.js"></script>
+<script language="Javascript" src="<%=request.getContextPath()%>/com/js/tigra_hints_cfg.js"></script>
+
+<script language="Javascript1.2" type="text/javascript">
+  <!--//
+  function selectReviewer(object) {
+    document.forms[0].action = "<%=request.getContextPath()%>/audit/assocConfirm.do?method=selectReviewer&reviewerId=" 
+      + object.options[object.selectedIndex].value;
+    document.forms[0].submit();
+  }
+
+  <logic:present name="associates">
+  function generateCSV() {
+	    document.forms[0].action = "<%=request.getContextPath()%>/audit/assocConfirm.do?method=selectReviewer&exportCSV=true&reviewerId=" 
+	      + "<bean:write property="reviewerId" name="FormAssocConfirm" />";
+	    document.forms[0].submit();
+	}
+  function generateMSExcel() {
+      document.forms[0].action = "<%=request.getContextPath()%>/audit/assocConfirm.do?method=selectReviewer&exportMSExcel=true&reviewerId=" 
+        + "<bean:write property="reviewerId" name="FormAssocConfirm" />";
+      document.forms[0].submit();
+  }
+  </logic:present>
+  //--> 
+  </script>
+  <h2><bean:message key="label.batchchgreviewer.title" /></h2>
+
+  <ul class="desc">
+    <li><strong><bean:message key="message.batchchgreviewer.howto1" /></strong></li>
+    <li><bean:message key="message.batchchgreviewer.howto2" /></li>
+    <li><bean:message key="message.batchchgreviewer.howto3" /></li>
+    <li><bean:message key="message.batchchgreviewer.howto4" /></li>
+  </ul>
+
+  <html:form action="/audit/assocConfirm.do?method=batchChgReviewer">
+  <logic:notPresent scope="request" name="revAuditId">
+    <p><bean:message key="label.adduser.reviewer" />: 
+       <html:select property="reviewerId" onchange="javascript:selectReviewer(this);">
+        <html:option value=""></html:option>
+          <html:optionsCollection property="reviewers" label="email" value="reviewerId" />
+       </html:select></p>
+  </logic:notPresent>
+
+  <logic:present name="associates">
+    <p class="buttons">
+      <html:button onclick="javascript:generateCSV();" property="" styleClass="submit">
+        <bean:message key="button.generateCSV" />
+      </html:button>
+      <html:button onclick="javascript:generateMSExcel();" property="" styleClass="submit">
+        <bean:message key="button.generateMSExcel" />
+      </html:button>
+    </p>
+    <bean:define id="revId" property="reviewerId" name="FormAssocConfirm" />
+    <display:table id="row" name="associates" 
+      requestURI="/audit/assocConfirm.do?method=submit">
+      <display:column property="userName" titleKey="label.usermaint.username" />
+      <display:column property="status" titleKey="label.usagereport.status" 
+        decorator="com.eds.gne.ciscosecure.global.dtdecorators.StatusDecorator" />
+      <display:column property="fullName" titleKey="label.assocconfirm.fullname" />
+      <display:column property="group.groupName" titleKey="label.assocconfirm.groupname" />
+      <display:column titleKey="label.adduser.reviewer">
+        <select name="reviewer_<%=((CSUser)row).getUserKey()%>">
+          <h:renderoptions name="reviewers" label="email" 
+            value="reviewerId" defaultValue="<%=revId%>"/>
+        </select>
+      </display:column>
+      <display:column property="lastLogin.time" titleKey="label.usagereport.lastlogin" format="{0,date,MM-dd-yyyy}" />   
+    </display:table>
+
+    <p class="buttons"><html:submit styleClass="submit">
+      <bean:message key="label.submit" />
+    </html:submit></p>
+  </logic:present>
+  </html:form>
+  
+	

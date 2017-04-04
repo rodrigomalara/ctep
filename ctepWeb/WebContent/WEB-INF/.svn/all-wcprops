@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/CiscoSecure/!svn/ver/272/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF
+END
+reportBeans.xml
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/CiscoSecure/!svn/ver/292/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/reportBeans.xml
+END
+struts-config.xml
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/CiscoSecure/!svn/ver/298/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/struts-config.xml
+END
+applicationContext.xml
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/CiscoSecure/!svn/ver/292/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/applicationContext.xml
+END
+serviceBeans.xml
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/CiscoSecure/!svn/ver/298/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/serviceBeans.xml
+END
+web.xml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/CiscoSecure/!svn/ver/292/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/web.xml
+END
+tiles-defs.xml
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/CiscoSecure/!svn/ver/296/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/tiles-defs.xml
+END
+action-servlet.xml
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/CiscoSecure/!svn/ver/298/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/action-servlet.xml
+END
+notificationBeans.xml
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/CiscoSecure/!svn/ver/292/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/notificationBeans.xml
+END

@@ -1,0 +1,34 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
+  <!-- START sidebar -->
+
+    <div id="sidebar">
+      <div id="sidenav">
+      <ul>
+        <li>
+          <html:link action="reports/searchLogs.do?method=showParamScreen&id=1"  styleId="1" >
+            <bean:message key="label.reports.tacacsadm"/>
+          </html:link>
+        </li>
+        <li>
+          <html:link action="reports/usageReport.do?method=prepareReport&id=2"  styleId="2" >
+            <bean:message key="label.usagereport.title"/>
+          </html:link>
+        </li>
+        <li>
+          <html:link action="reports/activityReport.do?method=prepare&id=3"  styleId="3" >
+            <bean:message key="label.activitylogreport.menutitle"/>
+          </html:link>
+        </li>
+      </ul>
+      </div>
+      <script type="text/javascript">
+      <!--//
+      <% if (request.getParameter("id") != null) { %>
+      sidenav('<%=request.getParameter("id")%>','');
+      <% } %>
+      //-->
+      </script>
+    </div>
+  <!-- END sidebar -->

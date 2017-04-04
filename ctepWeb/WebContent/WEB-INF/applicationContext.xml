@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd
+           http://www.springframework.org/schema/tx 
+           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+     
+  <context:annotation-config/>
+  <tx:annotation-driven transaction-manager="txManager" />
+        
+  <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+    <property name="jndiName" value="java:comp/env/jdbc/ctepDB"/>   
+    <property name="resourceRef" value="true" />
+  </bean>
+  
+  <bean id="txManager" 
+    class="org.springframework.jdbc.datasource.DataSourceTransactionManager" 
+    scope="singleton">
+    <property name="dataSource" ref="dataSource"/>
+  </bean>
+  
+  <bean id="propertyPlaceholderConfigurer" 
+    class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+    scope="singleton" >
+    <property name="locations">
+      <list>
+        <value>classpath:/ctep.properties</value>
+      </list>
+    </property>
+    <property name="ignoreUnresolvablePlaceholders">
+      <value>false</value>
+    </property>
+  </bean>
+  
+  <bean id="sqlMap" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+    <property name="configLocation">
+      <value>classpath:SqlMapConfig.xml</value>
+    </property>
+    <property name="dataSource" ref="dataSource" />
+  </bean>
+  
+  <bean id="tarefaDAO" class="br.com.ctep.dao.impl.GenericoDAOIBatisImpl" 
+     scope="singleton">
+    <constructor-arg>
+      <value>br.com.ctep.entidades.Tarefa</value>
+    </constructor-arg>
+    <property name="sqlMapClient" ref="sqlMap" />
+  </bean>
+  
+  <bean id="tarefaHistDAO" class="br.com.ctep.dao.impl.GenericoDAOIBatisImpl" 
+     scope="singleton">
+    <constructor-arg>
+      <value>br.com.ctep.entidades.TarefaHist</value>
+    </constructor-arg>
+    <property name="sqlMapClient" ref="sqlMap" />
+  </bean>
+  
+  <bean id="tarefaFacade" class="br.com.ctep.servicos.impl.TarefaFacadePojoImpl" 
+     scope="singleton">
+    <property name="sqlMapClient" ref="sqlMap" />
+    <property name="tarefaDAO">
+      <ref bean="tarefaDAO"/>
+    </property>
+    <property name="tarefaHistDAO">
+      <ref bean="tarefaHistDAO"/>
+    </property>
+  </bean>
+</beans>

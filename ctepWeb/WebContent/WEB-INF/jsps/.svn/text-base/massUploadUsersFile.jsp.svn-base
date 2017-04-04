@@ -1,0 +1,67 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+
+<script language="Javascript1.2" type="text/javascript">
+	<!--//
+	var msgIsEmpty = '<bean:message key="errors.isempty" />';
+	var fileLabel = '<bean:message key="label.massuploadusers.filename" />';
+	var reviewerLabel = '<bean:message key="label.adduser.reviewer" />';
+	var fileIsEmpty = msgIsEmpty.replace(/#0#/,"'" + fileLabel + "'");
+	var reviewerIsEmpty = msgIsEmpty.replace(/#0#/,"'" + reviewerLabel + "'");
+	
+	function validate() {
+    if (document.forms[0].elements["file"].value.length < 1) {
+      alert(fileIsEmpty);
+      return false;
+    }
+    if (document.forms[0].elements["reviewer.reviewerId"].value.length < 1) {
+      alert(reviewerIsEmpty);
+      document.forms[0].elements["reviewer.reviewerId"].focus();
+      return false;
+    }
+    return true;
+	}
+	//-->
+</script>
+
+<h2><bean:message key="label.massuploadusers.title" /></h2>
+<ul class="desc" style="width: 85%">
+  <li><strong><bean:message key="message.massuploadusers.howto1" /></strong></li>
+  <li><bean:message key="message.massuploadusers.howto2" /></li>
+  <li><bean:message key="message.massuploadusers.howto3" /></li>
+  <li><bean:message key="message.massuploadusers.howto4" /></li>
+  <li><bean:message key="message.massuploadusers.howto5" /></li>
+</ul>
+<br/>
+  <a href="<%=request.getContextPath()%>/com/downloads/Mass ADD USER TACACS Request Form.xls" ><bean:message key="global.clickhere" /></a>
+  <bean:message key="label.massuploadusers.filedownload" />
+<br/>
+<html:form action="/users/massUploadUsers.do?method=submitFile"
+  method="post" 
+  enctype="multipart/form-data" >
+	<table border="0">
+    <tr>
+      <td><bean:message key="label.adduser.reviewer" /></td>
+      <td>
+        <html:select property="reviewer.reviewerId">
+          <html:optionsCollection property="reviewers" label="email" value="reviewerId" />
+        </html:select>
+      </td>
+    </tr>
+		<tr>
+			<td><bean:message key="label.massuploadusers.filename" /></td>
+			<td><html:file property="file"/></td>
+		</tr>
+    <tr>
+      <td><bean:message key="label.massuploadusers.initialpassword" /></td>
+      <td><html:text size="20" maxlength="32" property="initialPassword"/></td>
+    </tr>
+	</table>
+
+  <p class="buttons">
+	  <html:submit styleClass="submit" onclick="return validate();">
+		  <bean:message key="label.next" />
+	  </html:submit>
+  </p>
+</html:form>

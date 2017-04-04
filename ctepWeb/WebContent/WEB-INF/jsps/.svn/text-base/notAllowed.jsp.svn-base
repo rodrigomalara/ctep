@@ -1,0 +1,17 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+
+<h4><bean:message key="global.error.message"/></h4>
+<script language="Javascript1.2" type="text/javascript">
+	<!--//
+	function gohome() {
+		history.back();
+	}
+	setTimeout("gohome()", 8000);
+//-->
+</script>
+<div id="error">
+<bean:message key="label.auth.notallowed"/>
+<p><a onclick="javascript:gohome()"><bean:message key="label.back"/></a></p>
+</div>

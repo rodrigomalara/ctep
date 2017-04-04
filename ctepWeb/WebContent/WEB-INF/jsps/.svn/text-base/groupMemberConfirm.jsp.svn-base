@@ -1,0 +1,41 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>
+<%@ page import="com.eds.gne.ciscosecure.AppConstants"%>
+<%@ page import="com.eds.gne.ciscosecure.entities.jpa.CSUser"%>
+<%@ page import="java.util.*" %>
+
+<!-- HTML Results -->
+<script language="Javascript" src="<%=request.getContextPath()%>/com/js/tigra_hints.js"></script>
+<script language="Javascript" src="<%=request.getContextPath()%>/com/js/tigra_hints_cfg.js"></script>
+  
+  <logic:present name="associates">
+    <h2><bean:message key="label.groupmemberconfirm.title" /></h2>
+    <ul class="desc">
+      <li><strong><bean:message key="message.groupmemberconfirm.howto1" /></strong></li>
+      <li><bean:message key="message.groupmemberconfirm.howto2" /></li>
+      <li><bean:message key="message.groupmemberconfirm.howto3" /></li>
+    </ul>
+    <p><bean:message key="label.groupmemberconfirm.groupname" />: 
+    <strong><bean:write property="groupName" name="FormGroupMemberConfirm" /></strong></p>
+    <html:form action="/audit/groupConfirm.do?method=submit">    
+    <html:hidden property="gaiId"/>
+    	<display:table id="row" name="associates" 
+        requestURI="/audit/groupConfirm.do?method=submit">
+        <display:column property="userName" titleKey="label.usermaint.username" />
+        <display:column property="status" titleKey="label.usagereport.status" 
+          decorator="com.eds.gne.ciscosecure.global.dtdecorators.StatusDecorator" />
+        <display:column property="fullName" titleKey="label.groupmemberconfirm.fullname" />
+        <display:column property="lastLogin.time" titleKey="label.usagereport.lastlogin" format="{0,date,MM-dd-yyyy}" />
+        <display:column titleKey="label.groupmemberconfirm.keep">
+          <input type="checkbox" name="keep_<%=((CSUser)row).getUserKey()%>" checked="checked">
+        </display:column>      
+      </display:table>
+
+      <p class="buttons"><html:submit styleClass="submit">
+        <bean:message key="label.submit" />
+      </html:submit></p>
+    </html:form>
+  </logic:present>

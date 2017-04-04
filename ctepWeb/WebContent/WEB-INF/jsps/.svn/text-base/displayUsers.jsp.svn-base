@@ -1,0 +1,120 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+<%@ page import="com.eds.gne.ciscosecure.AppConstants"%>
+<%@ page import="com.eds.gne.ciscosecure.entities.jpa.CSUser"%>
+<script language="Javascript" src="<%=request.getContextPath()%>/com/js/tigra_hints.js"></script>
+<script language="Javascript" src="<%=request.getContextPath()%>/com/js/tigra_hints_cfg.js"></script>
+<script language="Javascript1.2" type="text/javascript">
+<!--//
+var msgConfirmRemove="<bean:message key='message.confirmdelete'/>";
+function confirmDelete(url) {
+  if (confirm(msgConfirmRemove)) {
+    window.location = url;
+  }
+}
+//-->
+</script>
+
+<h2><bean:message key="label.usermaint.title" /></h2>
+<ul class="desc" style="width: 85%">
+  <li><strong><bean:message key="message.usermaint.howto1" /></strong></li>
+  <li><bean:message key="message.usermaint.howto2" /></li>
+  <li><bean:message key="message.usermaint.howto3" /></li>
+</ul>
+<html:form action="/users/userMaint.do?method=list">
+  <html:link action="users/userMaint.do?method=prepareAddUser"  styleId="prepareAddUser" >
+    <html:img page="/com/icons/18/tool.png" titleKey="label.adduser.title" /><bean:message key='label.sidenav.usermaint.adduser'/>
+  </html:link>
+  <html:hidden property="menuStyleId"/>
+  <table>
+    <tr>
+      <td rowspan="2" width="40px">
+        <strong><bean:message key="label.filters"/></strong>&nbsp;&nbsp;
+      </td>
+      <td>
+        <bean:message key="label.usermaint.username"/>
+      </td>
+      <td>
+        <bean:message key="label.adduser.fullname"/>
+      </td>
+      <td>
+        <bean:message key="label.auditmaint.status"/>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <html:text property="filters(userName)" size="10"/>
+      </td>
+      <td>
+        <html:text property="filters(fullName)" size="25"/>
+      </td>
+      <td>
+        <html:select property="filters(status)">
+    <html:option value="">
+      <bean:message key="global.all"/>
+    </html:option>
+    <html:option value="<%=CSUser.STATUS_ENABLED.toString()%>">
+      <bean:message key="label.changestatus.enabled"/>
+    </html:option>
+    <html:option value="<%=CSUser.STATUS_DISABLED.toString()%>">
+      <bean:message key="label.changestatus.disabled"/>
+    </html:option>
+    <html:option value="<%=CSUser.STATUS_EXPIRED_DATE.toString()%>">
+      <bean:message key="label.usermaint.status.expireddate"/>
+    </html:option>
+    <html:option value="<%=CSUser.STATUS_EXPIRED_WRONGATTEMPTS.toString()%>">
+      <bean:message key="label.usermaint.status.expiredwrongatt"/>
+    </html:option>
+  </html:select>
+      </td>
+      <td width="40px">
+        <html:submit styleClass="submit" >
+          <bean:message key="button.applyfilters" />
+        </html:submit>
+      </td>
+    </tr>
+  </table>
+	<!-- HTML Results -->
+	<logic:present name="users">
+  	<display:table id="row" name="users" 
+  	  partialList="true" size="resultsSize" pagesize="<%=(Integer) request.getAttribute("pagesize")%>"
+      requestURI="/users/userMaint.do?method=list">
+
+      <display:column  
+        titleKey="label.usermaint.operations">
+        <html:link action="users/userMaint.do?method=prepareEditUser" 
+          paramId="userKey" paramName="row"  paramProperty="userKey">
+          <html:img page="/com/icons/18/tool.png" titleKey="label.edit" />
+        </html:link>
+        <html:link action="users/userMaint.do?method=prepareChgPasswd" 
+          paramId="userKey" paramName="row"  paramProperty="userKey">
+          <html:img page="/com/icons/18/key.png" titleKey="label.usermaint.changepassword" />
+        </html:link>
+        <html:link action="users/userMaint.do?method=toggleStatus" 
+          paramId="userKey" paramName="row"  paramProperty="userKey">
+          <logic:equal value="<%=CSUser.STATUS_ENABLED.toString()%>" name="row" property="status">
+            <html:img page="/com/icons/18/unlocked_01.png" titleKey="label.usermaint.dodisableuser" />
+          </logic:equal>
+          <logic:empty name="row" property="status">
+            <html:img page="/com/icons/18/unlocked_01.png" titleKey="label.usermaint.dodisableuser" />
+          </logic:empty>
+          <logic:notEmpty name="row" property="status">
+            <logic:notEqual value="<%=CSUser.STATUS_ENABLED.toString()%>" name="row" property="status">
+              <html:img page="/com/icons/18/unlocked.png" titleKey="label.usermaint.doenableuser" />
+            </logic:notEqual>
+          </logic:notEmpty>
+        </html:link>
+        <a href="javascript:confirmDelete('<%=request.getContextPath()%>/users/userMaint.do?method=submitRemoveUser&userKey=<bean:write name='row' property='userKey'/>');">
+          <html:img page="/com/icons/18/Recycle.png" titleKey="label.delete" />
+        </a>
+      </display:column>
+      <display:column property="userName" titleKey="label.usermaint.username" />
+      <display:column property="fullName" titleKey="label.adduser.fullname" />
+      <display:column property="status" titleKey="label.usagereport.status" 
+        decorator="com.eds.gne.ciscosecure.global.dtdecorators.StatusDecorator" />
+      <display:column property="lastLogin.time" titleKey="label.usagereport.lastlogin" format="{0,date,MM-dd-yyyy}" />
+    </display:table>
+  </logic:present>
+</html:form>

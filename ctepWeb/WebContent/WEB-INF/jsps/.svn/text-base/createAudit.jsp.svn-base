@@ -1,0 +1,62 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+
+<script language="Javascript" 
+  src="<%=request.getContextPath()%>/com/js/validation.js"></script>
+<script language="Javascript1.2" type="text/javascript">
+	<!--//
+	var msgIsEmpty = '<bean:message key="errors.isempty" />';
+	var confirmProceed = '<bean:message key="label.auditmaint.confirmauditcreate" />';
+	var descriptionLabel = '<bean:message key="label.auditmaint.description" />';
+	
+	var descriptionIsEmpty = msgIsEmpty.replace(/#0#/,"'" + descriptionLabel + "'");
+	
+	function validate() {
+    if (document.forms[0].elements["audit.description"].value.length < 1) {
+      alert(descriptionIsEmpty);
+      document.forms[0].elements["audit.description"].focus();
+      return false;
+    }
+    if (!confirm(confirmProceed)) {
+        return false;
+    }
+    return true;
+	}
+	//-->
+</script>
+<h2><bean:message key="label.createaudit.title" /></h2>
+
+  <logic:present name="reviewers">
+    <ul class="desc" style="width: 85%">
+    <li><strong><bean:message key="message.createaudit.howto1" /></strong></li>
+    <li><bean:message key="message.createaudit.howto2" /></li>
+    <li><bean:message key="message.createaudit.howto3" /></li>
+    <li><bean:message key="message.createaudit.howto4" /></li>
+    </ul>
+
+    <html:form action="/audit/auditMaint.do?method=submitCreate">
+      <html:hidden property="menuStyleId"/>
+      <table border="0">
+        <tr>
+          <td><bean:message key="label.auditmaint.description" /></td>
+          <td><html:text property="audit.description" maxlength="200" size="50" /></td>
+        </tr>
+      </table>
+
+      <p class="buttons"><html:submit styleClass="submit"
+        onclick="return validate();">
+        <bean:message key="label.submit" />
+      </html:submit></p>
+    
+      <h3><bean:message key="label.auditmaint.reviewers" /></h3>
+
+      <html:select property="reviewer" size="10">
+        <html:optionsCollection property="reviewers" label="email" value="reviewerId" />
+      </html:select>
+    </html:form>
+  </logic:present>
+
+
+

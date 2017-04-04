@@ -1,0 +1,208 @@
+package com.eds.gne.ciscosecure.global.actions;
+
+import java.io.Writer;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
+import org.apache.struts.actions.DispatchAction;
+
+import com.eds.gne.ciscosecure.CSACSPersistenceConstants;
+import com.eds.gne.ciscosecure.csinterface.CSInterfaceFactory;
+import com.eds.gne.ciscosecure.entities.jpa.Domain;
+import com.eds.gne.ciscosecure.global.forms.FormDomain;
+import com.eds.gne.ciscosecure.services.DomainFacade;
+import com.eds.gne.ciscosecure.services.ServiceFactory;
+import com.eds.gne.utils.AppUtil;
+
+public class DomainAdminDispatchAction extends DispatchAction {
+
+  public static String DETAILS_PAGE = "addDomain";
+  public static final String LOAD_PAGE = "loadDomain";
+
+  public ActionForward prepareAddDomain(ActionMapping mapping, ActionForm form,
+      HttpServletRequest request, HttpServletResponse response)
+      throws Exception {
+    final FormDomain formDomain = (FormDomain) form;
+
+    final DomainFacade dFacade = ServiceFactory.getDomainFacade();
+    final List<Domain> domains = dFacade.find(formDomain.getDomain()
+        .getDomain());
+    final Iterator<Domain> it = domains.iterator();
+    while (it.hasNext()) {
+      final Domain domain = it.next();
+      if (domain.getDescription() != null
+          && domain.getDescription().length() > 0) {
+        formDomain.getDomain().setDescription(domain.getDescription());
+        break;
+      }
+    }
+
+    return mapping.findForward(DETAILS_PAGE);
+  }
+
+  public ActionForward addDomain(ActionMapping mapping, ActionForm form,
+      HttpServletRequest request, HttpServletResponse response)
+      throws Exception {
+
+    final FormDomain formDomain = (FormDomain) form;
+
+    final DomainFacade dFacade = ServiceFactory.getDomainFacade();
+
+    final Domain domain = formDomain.getDomain();
+
+    // check if value already exist in the domain
+    final String label = dFacade.getDomainLabel(domain.getDomain(), domain
+        .getOptionValue());
+    if (label == null) {
+      // Copy the value to the label
+      domain.setOptionLabel(domain.getOptionValue());
+      dFacade.create(domain);
+    }
+
+    final List<Domain> domains = dFacade.find(formDomain.getDomain()
+        .getDomain());
+
+    if (CSACSPersistenceConstants.DOMAIN_ACS_PASSWORD
+        .equals(domain.getDomain())) {
+      convertToXMLPassword(domains, response, formDomain, 
+          request.getParameter("method"), request);      
+    } else {
+      convertToXML(domains, response, formDomain, request.getParameter("method"));
+    }
+    formDomain.setDomain(new Domain());
+
+    return null;
+  }
+
+  protected void convertToXML(List<Domain> domains,
+      HttpServletResponse response, FormDomain form, String operation)
+      throws Exception {
+    response.setContentType("text/xml");
+    final Writer out = response.getWriter();
+    out.write("<?xml version=\"1.0\" ?>");
+    out.write("<domain>");
+    out.write("<field>" + form.getFieldName() + "</field>");
+    out.write("<operation>" + operation + "</operation>");
+    out.write("<options>");
+
+    // empty line
+    out.write("<option value=\"\"></option>");
+
+    final Iterator<Domain> it = domains.iterator();
+    while (it.hasNext()) {
+      final Domain domain = it.next();
+      out.write("<option value=\"" + domain.getOptionValue() + "\">"
+          + domain.getOptionLabel() + "</option>");
+    }
+    out.write("</options>");
+    out.write("</domain>");
+    out.flush();
+  }
+
+  public ActionForward removeDomainNoCheck(ActionMapping mapping,
+      ActionForm form, HttpServletRequest request, HttpServletResponse response)
+      throws Exception {
+
+    final FormDomain formDomain = (FormDomain) form;
+    final Domain domain = formDomain.getDomain();
+
+    final DomainFacade dFacade = ServiceFactory.getDomainFacade();
+
+    final List<Domain> domains = dFacade.find(domain.getDomain());
+    final Iterator<Domain> it = domains.iterator();
+    while (it.hasNext()) {
+      final Domain tmpDomain = it.next();
+      if (tmpDomain.getOptionValue().equals(domain.getOptionValue())) {
+        dFacade.remove(tmpDomain);
+        it.remove();
+      }
+    }
+    
+    if (CSACSPersistenceConstants.DOMAIN_ACS_PASSWORD
+        .equals(domain.getDomain())) {
+      convertToXMLPassword(domains, response, formDomain, 
+          request.getParameter("method"), request);      
+    } else {
+      convertToXML(domains, response, formDomain, request.getParameter("method"));
+    }
+
+    formDomain.setDomain(new Domain());
+
+    return null;
+  }
+
+  public ActionForward prepareBatchLoad(ActionMapping mapping, ActionForm form,
+      HttpServletRequest request, HttpServletResponse response)
+      throws Exception {
+    return mapping.findForward(LOAD_PAGE);
+  }
+
+  public ActionForward submitBatchLoad(ActionMapping mapping, ActionForm form,
+      HttpServletRequest request, HttpServletResponse response)
+      throws Exception {
+
+    final FormDomain formD = (FormDomain) form;
+    final String values[] = AppUtil.getInstance().tokenizeLine(
+        formD.getValues(), System.getProperty("line.separator"));
+
+    final DomainFacade dFacade = ServiceFactory.getDomainFacade();
+    for (int i = 0; i < values.length; i++) {
+      final Domain d = new Domain();
+      d.setDescription(formD.getDomain().getDescription());
+      d.setDomain(formD.getDomain().getDomain());
+      d.setOptionLabel(values[i]);
+      d.setOptionValue(values[i]);
+      d.setIsDefault(CSACSPersistenceConstants.FALSE);
+      dFacade.create(d);
+    }
+
+    final ActionMessage message = new ActionMessage("label.maintdomain.loaded",
+        values.length, formD.getDomain().getDomain());
+    final ActionMessages msgs = new ActionMessages();
+    msgs.add(ActionMessages.GLOBAL_MESSAGE, message);
+    this.addMessages(request, msgs);
+
+    formD.getDomain().setDescription("");
+    formD.getDomain().setDomain("");
+    formD.setValues("");
+
+    return prepareBatchLoad(mapping, form, request, response);
+  }
+  
+  protected void convertToXMLPassword(List<Domain> domains,
+      HttpServletResponse response, FormDomain form, String operation,
+      HttpServletRequest request)
+      throws Exception {
+    response.setContentType("text/xml");
+    final Writer out = response.getWriter();
+    out.write("<?xml version=\"1.0\" ?>");
+    out.write("<domain>");
+    out.write("<field>" + form.getFieldName() + "</field>");
+    out.write("<operation>" + operation + "</operation>");
+    out.write("<options>");
+
+    // empty line
+    String randomPassword = CSInterfaceFactory.
+      getCSAdapter().getRandomPassword();
+    out.write("<option value=\"" + randomPassword + "\">" +
+        randomPassword + "</option>");
+    
+    final Iterator<Domain> it = domains.iterator();
+    while (it.hasNext()) {
+      final Domain domain = it.next();
+      out.write("<option value=\"" + domain.getOptionValue() + "\">"
+          + domain.getOptionLabel() + "</option>");
+    }
+    out.write("</options>");
+    out.write("</domain>");
+    out.flush();
+  }
+}

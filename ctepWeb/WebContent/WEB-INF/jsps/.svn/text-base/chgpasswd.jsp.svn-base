@@ -1,0 +1,127 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ page import="com.eds.gne.ciscosecure.entities.jpa.CSUser"%>
+<%@ page import="com.eds.gne.ciscosecure.global.dtdecorators.StatusDecorator"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>
+<%@page import="com.eds.gne.ciscosecure.CSACSPersistenceConstants"%>
+
+<script language="Javascript" src="<%=request.getContextPath()%>/com/js/tigra_hints.js"></script>
+<script language="Javascript" src="<%=request.getContextPath()%>/com/js/tigra_hints_cfg.js"></script>
+
+<script language="Javascript" src="<%=request.getContextPath()%>/com/js/validation.js"></script>
+
+<link href="<%=request.getContextPath()%>/com/themes/default.css" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath()%>/com/themes/alphacube.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<%=request.getContextPath()%>/com/js/pwc/prototype.js"> </script> 
+<script type="text/javascript" src="<%=request.getContextPath()%>/com/js/pwc/effects.js"> </script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/com/js/pwc/window.js"> </script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/com/js/pwc/window_effects.js"> </script>
+
+<script language="Javascript1.2" type="text/javascript">
+	<!--//
+	var msgIsEmpty = '<bean:message key="errors.isempty" />';
+	var passwordLabel = '<bean:message key="label.resetpassword.password" />';
+	var userNameLabel = '<bean:message key="label.usermaint.username" />';
+	var passwordIsEmpty = msgIsEmpty.replace(/#0#/,"'" + passwordLabel + "'");
+	var userIsEmpty = msgIsEmpty.replace(/#0#/,"'" + userNameLabel + "'");
+	
+	function validate() {
+    if (document.forms[0].elements["user.userName"].value.length < 1) {
+      alert(userIsEmpty);
+      return false;
+    }
+    if (document.forms[0].elements["user.password"].value.length < 1) {
+      alert(passwordIsEmpty);
+      return false;
+    }
+	}
+	function back() {
+	    document.forms['FormUser'].action = '<%=request.getContextPath()%>/users/userMaint.do?method=list';
+	    document.forms['FormUser'].submit();
+	  }
+
+	// Domain maintenance configs
+	var okLbl = '<bean:message key="label.submit" />';
+	var cancelLbl = '<bean:message key="label.cancel" />';
+	var errorMsg = '<bean:message key="global.error.message"/>';
+	var delDomainInfo = '<bean:message key="label.deldomain.info"/>';
+	var delDomainConfirm = '<bean:message key="label.deldomain.confirm"/>';
+	var yesLbl = '<bean:message key="global.yes" />';
+	var noLbl = '<bean:message key="global.no" />';
+	var entityKey = '<bean:write property="user.userKey" name="FormUser" />';
+	var entityKeyProperty = 'user.userKey';
+	var formName = 'FormUser';
+	var contextPath = '<%=request.getContextPath()%>';
+	var removeDomainMethod = 'removeDomainNoCheck';
+	//-->
+</script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/com/js/domain.js" ></script>
+<bean:define id="usr" property="user" name="FormUser"/>
+<%com.eds.gne.ciscosecure.entities.jpa.CSUser user = 
+  (com.eds.gne.ciscosecure.entities.jpa.CSUser) usr;%>
+<h2><bean:message key="label.resetpassword.title" /></h2>
+<html:form action="/users/userMaint.do?method=submitChgPassword">
+<html:hidden property="user.userKey" />
+  <html:hidden property="user.userName" /> 
+  <table border="0">
+    <tr>
+      <td><bean:message key="label.usermaint.username" /></td>
+      <td><bean:write property="user.userName" name="FormUser" /></td>
+    </tr>
+    <tr>
+      <td><bean:message key="label.adduser.fullname" /></td>
+      <td><bean:write property="user.fullName" name="FormUser" /></td>
+    </tr>
+    <tr>
+      <td><bean:message key="label.adduser.description" /></td>
+      <td><bean:write property="user.description" name="FormUser" /></td>
+    </tr>
+    <tr>
+      <td><bean:message key="label.adduser.email" /></td>
+      <td><bean:write property="user.emailAddress" name="FormUser" /></td>
+    </tr>
+    <tr>
+      <td><bean:message key="label.adduser.reviewer" /></td>
+      <td><bean:write property="user.reviewer.email" name="FormUser" /></td>
+    </tr>
+    <tr>
+      <td><bean:message key="label.adduser.groupname" /></td>
+      <td><bean:write property="user.group.groupName" name="FormUser" /></td>
+    </tr>
+    <tr>
+      <td><bean:message key="label.changestatus.status" /></td>
+      <td><%out.print(new StatusDecorator().decorate(((CSUser)usr).getStatus(), pageContext, null));%>
+      </td>
+    </tr>
+	  <tr>
+			<td><bean:message key="label.resetpassword.password" /></td>
+			<td>
+      <logic:equal value="true" name="FormUser" property="showPwdDropDown">
+			  <html:select property="user.password">
+          <html:option value="<%=user.getPassword()%>"><%=user.getPassword()%></html:option>
+          <h:domainOptions 
+            domainName="<%=CSACSPersistenceConstants.DOMAIN_ACS_PASSWORD%>" 
+            defaultValue="<%=user.getPassword()%>" />
+          </html:select>
+          <h:domainMaint 
+            domainName="<%=CSACSPersistenceConstants.DOMAIN_ACS_PASSWORD%>" 
+            fieldName="user.password" /> &nbsp;(<bean:message key="label.resetpassword.randomgeneratedselect"/>)
+      </logic:equal>
+      <logic:notEqual value="true" name="FormUser" property="showPwdDropDown">
+        <html:text property="user.password" size="20" maxlength="30" />&nbsp;(<bean:message key="label.resetpassword.randomgenerated"/>)
+      </logic:notEqual>
+      </td>
+		</tr>
+	</table>
+
+	<p class="buttons">
+	  <html:submit styleClass="submit"
+		  onclick="return validate();">
+		  <bean:message key="label.submit" />
+	  </html:submit>
+    <html:submit styleClass="submit" onclick="back();">
+      <bean:message key="label.back" />
+    </html:submit>
+  </p>
+</html:form>

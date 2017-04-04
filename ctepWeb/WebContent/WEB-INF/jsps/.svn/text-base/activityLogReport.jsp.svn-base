@@ -1,0 +1,118 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+<%@ page import="com.eds.gne.ciscosecure.AppConstants"%>
+<script language="Javascript" src="<%=request.getContextPath()%>/com/js/tranlogDateSelect.js"></script>
+<script language="Javascript1.2" type="text/javascript">
+  <!--//
+  <!--//
+  var cal1 = new CalendarPopup();
+  cal1.showYearNavigation();
+  cal1.setTodayText('<bean:message key="label.searchlogs.dateperiod.today" />');
+  var fromDate = '<bean:message key="msg.searchlogs.startDate" />';
+  var toDate = '<bean:message key="msg.searchlogs.endDate" />';
+  var msgInvalidStartDate = '<bean:message key="error.searchlogs.startDate" />';
+  var msgInvalidEndDate = '<bean:message key="error.searchlogs.endDate" />';
+  var dateFormat = '<bean:write property="dateFormat" name="FormActivityLog"/>';
+  
+  var msgInvalidOutputType = '<bean:message key="error.searchlogs.outputType.select" />';
+  var REPORT_TYPE_MSEXCEL = '<%=AppConstants.SEARCH_LOGS_REPORT_TYPE_MSEXCEL%>';
+  var REPORT_TYPE_CSV = '<%=AppConstants.SEARCH_LOGS_REPORT_TYPE_CSV%>';
+
+  function calendar(obj) 
+  {
+    if(obj=="from")
+      cal1.select(document.forms[0]["startDate"],'anchor1',document.forms[0].dateFormat.value);
+    else
+      cal1.select(document.forms[0]["endDate"],'anchor2',document.forms[0].dateFormat.value);
+  }
+  //-->
+</script>
+
+<h2><bean:message key="label.activitylogreport.title" /></h2>
+<ul class="desc">
+  <li><strong><bean:message key="message.activitylogreport.howto1" /></strong></li>
+  <li><bean:message key="message.activitylogreport.howto2" /></li>
+</ul>
+<html:form action="/reports/activityReport.do?method=filter">
+  <html:hidden property="dateFormat" />
+  <html:hidden property="id" />
+  <table border="0" >
+    <tr valign="bottom">
+      <td><bean:message key="label.searchlogs.dateperiod" /><br/> (<bean:write
+        property="dateFormat" name="FormActivityLog" />) <span
+        class="accenttext">*</span></td>
+      <td><html:text property="startDate" maxlength="10"
+        size="12" styleClass="required" /> <a
+        style="position: relative; top: 3;" href="#"
+        onclick="javascript:calendar('from');"
+        onmouseover="javascript:closing=false;"
+        onmouseout="javascript:closing=true;" name="anchor1" id="anchor1">
+      <img src="<%=request.getContextPath()%>/com/img/cal.gif" width="20" height="20" border="0"> </a>
+      <html:text property="endDate" maxlength="10" size="12"
+        styleClass="required" /> <a style="position: relative; top: 3;"
+        href="#" onclick="javascript:calendar('to');"
+        onmouseover="javascript:closing=false;"
+        onmouseout="javascript:closing=true;" name="anchor2" id="anchor2">
+      <img src="<%=request.getContextPath()%>/com/img/cal.gif" width="20" height="20" border="0"> </a>
+      </td>
+      <td><bean:message key="label.activitylogreport.role" /></td>
+      <td>
+        <html:select property="log.role" >
+          <html:option value=""><bean:message key="global.all"/></html:option>
+          <html:options property="roles" />
+        </html:select>
+      </td>
+      <td><bean:message key="label.activitylogreport.who" /></td>
+      <td>
+        <html:select property="log.who" >
+          <html:option value=""><bean:message key="global.all"/></html:option>
+          <html:options property="users" />
+        </html:select>
+      </td>
+    </tr>
+  </table>
+  <table border="0">
+    <tr>
+      <td><bean:message key="label.searchlogs.outputType.label" /><span
+        class="accenttext">*</span></td>
+      <td>
+        <html:radio property="reportType" styleClass="required"
+        value="<%=AppConstants.SEARCH_LOGS_REPORT_TYPE_MSEXCEL%>"> &nbsp;
+                <bean:message key="label.searchlogs.outputType.MSExcel" />
+        </html:radio>&nbsp;&nbsp; 
+        <html:radio property="reportType" styleClass="required"
+        value="<%=AppConstants.SEARCH_LOGS_REPORT_TYPE_CSV%>"> &nbsp;
+                <bean:message key="label.searchlogs.outputType.CSV" />
+        </html:radio>&nbsp;&nbsp;
+        <html:radio property="reportType" styleClass="required" 
+        value="<%=AppConstants.SEARCH_LOGS_REPORT_TYPE_HTML%>"> &nbsp;
+                <bean:message key="label.usagereport.outputType.HTML" />
+        </html:radio>
+      </td>
+      <td>
+        <html:submit styleClass="submit">
+          <bean:message key="label.submit" />
+        </html:submit>
+      </td>
+    </tr> 
+  </table>
+  
+<!-- 	<p class="buttons"></p>  -->
+	
+	<!-- HTML Results -->
+	<logic:present name="activity">
+  	<display:table id="row" name="activity" 
+      requestURI="/reports/activityReport.do?method=filter">
+      <display:column property="when.time" 
+        titleKey="label.activitylogreport.when" format="{0,date,MM-dd-yyyy hh:mm}" />
+      <display:column property="role" 
+        titleKey="label.activitylogreport.role" />
+      <display:column property="who" 
+        titleKey="label.activitylogreport.who" />
+      <display:column property="what" 
+        titleKey="label.activitylogreport.what" /> 
+    </display:table>
+  </logic:present>
+</html:form>

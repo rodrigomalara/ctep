@@ -1,0 +1,52 @@
+package com.eds.gne.ciscosecure.global.actions;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
+
+public class NavigationAction extends Action {
+	
+	/**
+	 * Due to JSPs being stored inside WEB-INF and due to Tiles use,
+	 * they can't be referenced directly by JSP pages. So this action 
+	 * will receive a request parameter called target and forward 
+	 * the control to it. The target must be configured on struts-config.xml
+	 * and on tiles-defs.xml for working correctly. Otherwise an error message
+	 * will be displayed.
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 * @author dzd70d
+	 * @since 12/03/2008
+	 */
+	public ActionForward execute(ActionMapping mapping,
+            ActionForm form,
+            HttpServletRequest request,
+            HttpServletResponse response)
+            throws Exception {
+		
+		String forwardTo = request.getParameter("target");
+		
+		ActionForward next = mapping.findForward(forwardTo);
+		
+		if (next == null) {
+			ActionMessage message = new ActionMessage("error.nav.target", forwardTo);
+			ActionMessages msgs = new ActionMessages();
+			msgs.add(ActionMessages.GLOBAL_MESSAGE, message);
+			this.addMessages(request, msgs);
+			next = mapping.findForward("error");
+		}
+		
+		return next;
+	}
+}

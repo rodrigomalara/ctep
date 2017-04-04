@@ -1,0 +1,57 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+
+<script language="Javascript">
+var msgConfirmRemove="<bean:message key='message.confirmdelete'/>";
+function confirmDelete(url) {
+	if (confirm(msgConfirmRemove)) {
+		window.location = url;
+	}
+}
+function insert() {
+	window.location = "<%=request.getContextPath()%>/users/reviewerMaint.do?method=prepareInsert";
+}
+</script>
+
+<h2><bean:message key="label.reviewermaint.title" /></h2>
+
+
+<a href="javascript:insert();"><img src="<%=request.getContextPath()%>/com/icons/24/add.png" title="<bean:message key='hint.reviewermaint.insert'/>" /><bean:message key='hint.reviewermaint.insert'/></a>
+<p/>
+<html:form action="/users/reviewerMaint.do?method=listReviewers">
+  <html:hidden property="menuStyleId"/>
+  <strong><bean:message key="label.filters"/></strong>&nbsp;&nbsp;
+  <bean:message key="label.field"/>
+  <html:select property="filterField">
+    <html:option value="email">
+      <bean:message key="label.reviewermaint.email"/>&nbsp;&nbsp;&nbsp;
+    </html:option>
+    <html:option value="name">
+      <bean:message key="label.reviewermaint.name"/>&nbsp;&nbsp;&nbsp;
+    </html:option>
+  </html:select>
+  <html:text property="filterValue" />
+  
+  <html:submit styleClass="submit" >
+    <bean:message key="button.applyfilters" />
+  </html:submit>
+  <br/>&nbsp;
+  <display:table id="row" name="reviewersTable" 
+  	partialList="true" size="resultsSize" pagesize="<%=(Integer) request.getAttribute("pagesize")%>"
+  	requestURI="/users/reviewerMaint.do?method=listReviewers" excludedParams="*" >
+  	<display:column href="reviewerMaint.do?method=prepareUpdate" 
+		  paramId="reviewer.reviewerId" paramProperty="reviewerId" 
+		  titleKey="label.edit">
+		  <img src="<%=request.getContextPath()%>/com/icons/18/tool.png"/>
+	 </display:column>
+	 <display:column titleKey="label.delete">
+  		<a href="javascript:confirmDelete('<%=request.getContextPath()%>/users/reviewerMaint.do?method=delete&reviewer.reviewerId=<bean:write name='row' property='reviewerId'/>');">
+	 		  <img src="<%=request.getContextPath()%>/com/icons/18/Recycle.png"/>
+		  </a>
+	 </display:column>
+	 <display:column property="email" titleKey="label.reviewermaint.email" />
+    <display:column property="name" titleKey="label.reviewermaint.name" />
+  </display:table>
+</html:form>

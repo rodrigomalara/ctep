@@ -1,0 +1,223 @@
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+
+<tiles-definitions>
+	<!--  Layout definitions -->
+	<definition name="layout" path="/WEB-INF/jsps/layout.jsp">
+	  <put name="pageclass" value="home" type="string" />
+	  <put name="sidenav" value="/com/incl/empty.html" type="page" />
+		<put name="body" value="" type="page" />
+		<put name="allpages" value="/com/incl/allpages.jsp" type="page" />
+		<put name="sitebanner" value="/WEB-INF/jsps/sitebanner.jsp"
+			type="page" />
+		<put name="sitenav" value="/com/incl/sitenav.jsp"
+			type="page" />
+		<put name="footer" value="/WEB-INF/jsps/footer.jsp" type="page" />
+	</definition>
+
+	<!--  Global definitions -->
+	<definition name=".error" extends="layout">
+		<put name="body" value="/WEB-INF/jsps/error.jsp" />
+	</definition>
+	<definition name=".about" extends="layout">
+		<put name="body" value="/WEB-INF/jsps/about.jsp" />
+	</definition>
+	<definition name=".contact" extends="layout">
+		<put name="body" value="/WEB-INF/jsps/contact.jsp" />
+	</definition>
+	<definition name=".login" extends="layout">
+		<put name="body" value="/WEB-INF/jsps/login.jsp" />
+		<put name="sitenav" value="/com/incl/empty.html" type="page" />
+	</definition>
+	<definition name=".logininvalid" extends="layout">
+		<put name="body" value="/WEB-INF/jsps/logininvalid.jsp" />
+		<put name="sitenav" value="/com/incl/empty.html" type="page" />
+	</definition>
+	<definition name=".logout" extends="layout">
+		<put name="body" value="/WEB-INF/jsps/logout.jsp" />
+		<put name="sitenav" value="/com/incl/empty.html" type="page" />
+	</definition>
+	<definition name=".notAllowed" extends="layout">
+		<put name="body" value="/WEB-INF/jsps/notAllowed.jsp" />
+		<put name="sitenav" value="/com/incl/empty.html" type="page" />
+	</definition>
+
+	<!-- Reports -->
+	<definition name=".usageReport" extends="layout">
+    <put name="body"
+      value="/WEB-INF/jsps/usageReport.jsp" />
+    <put name="sidenav"
+      value="/WEB-INF/jsps/reportsNav.jsp" />
+  </definition>
+  <definition name=".searchLogsParam" extends="layout">
+    <put name="body" value="/WEB-INF/jsps/searchLogsParam.jsp" />
+    <put name="sidenav"
+      value="/WEB-INF/jsps/reportsNav.jsp" />
+  </definition>
+  <definition name=".reports" extends="layout">
+    <put name="body" value="/WEB-INF/jsps/reports.jsp" />
+    <put name="sidenav"
+      value="/WEB-INF/jsps/reportsNav.jsp" />
+  </definition>
+  <definition name=".activityReport" extends="layout">
+    <put name="body"
+      value="/WEB-INF/jsps/activityLogReport.jsp" />
+    <put name="sidenav"
+      value="/WEB-INF/jsps/reportsNav.jsp" />
+  </definition>
+  
+  <!-- Audit Maintenance-->
+  <definition name=".auditMaint" extends="layout">
+    <put name="body"
+      value="/WEB-INF/jsps/auditMaint.jsp"/>
+    <put name="sidenav"
+      value="/WEB-INF/jsps/auditMaintNav.jsp" />
+  </definition>
+  <definition name=".createAudit" extends="layout">
+    <put name="body"
+      value="/WEB-INF/jsps/createAudit.jsp" />
+    <put name="sidenav"
+      value="/WEB-INF/jsps/auditMaintNav.jsp" />
+  </definition>
+  <definition name=".listAudits" extends="layout">
+    <put name="body"
+      value="/WEB-INF/jsps/listAudits.jsp" />
+    <put name="sidenav"
+      value="/WEB-INF/jsps/auditMaintNav.jsp" />
+  </definition>
+  <definition name=".verifyAudit" extends="layout">
+    <put name="body"
+      value="/WEB-INF/jsps/verifyAudit.jsp" />
+    <put name="sidenav"
+      value="/WEB-INF/jsps/auditMaintNav.jsp" />
+  </definition>
+  <definition name=".assocConfirm" extends="layout">
+    <put name="body"
+      value="/WEB-INF/jsps/assocConfirm.jsp" />
+    <put name="pageclass" value="full" />
+    <put name="sitenav" value="/com/incl/empty.html" type="page" />
+  </definition>
+  <definition name=".groupMemberConfirm" extends="layout">
+    <put name="body"
+      value="/WEB-INF/jsps/groupMemberConfirm.jsp" />
+    <put name="pageclass" value="full" />
+    <put name="sitenav" value="/com/incl/empty.html" type="page" />
+  </definition>
+  
+  <!-- Group Audits -->
+  <definition name=".groupAudit" extends="layout">
+    <put name="body"
+      value="/WEB-INF/jsps/groupAudit.jsp"/>
+    <put name="sidenav"
+      value="/WEB-INF/jsps/groupAuditNav.jsp" />
+  </definition>
+  <definition name=".createGroupAudit" extends="layout">
+    <put name="body"
+      value="/WEB-INF/jsps/createGroupAudit.jsp" />
+    <put name="sidenav"
+      value="/WEB-INF/jsps/groupAuditNav.jsp" />
+  </definition>
+  <definition name=".listGroupAudits" extends="layout">
+    <put name="body"
+      value="/WEB-INF/jsps/listGroupAudits.jsp" />
+    <put name="sidenav"
+      value="/WEB-INF/jsps/groupAuditNav.jsp" />
+  </definition>
+  <definition name=".verifyGroupAudit" extends="layout">
+    <put name="body"
+      value="/WEB-INF/jsps/verifyGroupAudit.jsp" />
+    <put name="sidenav"
+      value="/WEB-INF/jsps/groupAuditNav.jsp" />
+  </definition>
+  
+  <!-- Batch Change Reviewers -->
+  <definition name=".batchChgReviewer" extends="layout">
+    <put name="body"
+      value="/WEB-INF/jsps/batchChgReviewer.jsp" />
+    <put name="pageclass" value="full" />
+  </definition>
+  <definition name=".enabledStatus" extends="layout">
+    <put name="body" value="/WEB-INF/jsps/enabledStatus.jsp" />
+    <put name="pageclass" value="full" />
+    <put name="sitenav" value="/com/incl/empty.html"/>
+    <put name="sitebanner" value="/com/incl/empty.html"/>
+  </definition>
+  
+  	
+  <!-- User Maintenance -->
+  <definition name=".displayUsers" extends="layout">
+    <put name="body" value="/WEB-INF/jsps/displayUsers.jsp" />
+    <put name="sidenav"
+      value="/WEB-INF/jsps/userMaintNav.jsp" />
+  </definition>
+	<definition name=".userMaint" extends="layout">
+    <put name="body"
+      value="/WEB-INF/jsps/userMaint.jsp"/>
+    <put name="sidenav"
+      value="/WEB-INF/jsps/userMaintNav.jsp" />
+  </definition>
+  
+	<definition name=".prepChgPasswd" extends="layout">
+    <put name="body"
+      value="/WEB-INF/jsps/chgpasswd.jsp" />
+    <put name="sidenav"
+      value="/WEB-INF/jsps/userMaintNav.jsp" />
+  </definition>
+  <definition name=".prepAddUser" extends="layout">
+    <put name="body"
+      value="/WEB-INF/jsps/addUser.jsp" />
+    <put name="sidenav"
+      value="/WEB-INF/jsps/userMaintNav.jsp" />
+  </definition>
+  <definition name=".prepEditUser" extends="layout">
+    <put name="body"
+      value="/WEB-INF/jsps/editUser.jsp" />
+    <put name="sidenav"
+      value="/WEB-INF/jsps/userMaintNav.jsp" />
+  </definition>
+  <definition name=".upload" extends="layout">
+    <put name="body"
+      value="/WEB-INF/jsps/massUploadUsersFile.jsp" />
+    <put name="sidenav"
+      value="/WEB-INF/jsps/userMaintNav.jsp" />
+  </definition>
+	<definition name=".confirm" extends="layout">
+    <put name="body"
+      value="/WEB-INF/jsps/massUploadUsersConfirm.jsp" />
+    <put name="sidenav"
+      value="/com/incl/empty.html" />
+  </definition>
+  
+  <!-- Reviewer maintenance -->
+  <definition name=".displayReviewers" extends="layout">
+    <put name="body" value="/WEB-INF/jsps/displayReviewers.jsp" />
+    <put name="sidenav"
+      value="/WEB-INF/jsps/userMaintNav.jsp" />
+  </definition>
+  <definition name=".editReviewer" extends="layout">
+    <put name="body"
+      value="/WEB-INF/jsps/editReviewer.jsp" />
+    <put name="sidenav"
+      value="/com/incl/empty.html" />
+  </definition>
+  
+  <!-- Domain maintenance -->
+  <definition name=".loadDomain" extends="layout">
+    <put name="body"
+      value="/WEB-INF/jsps/loadDomain.jsp" />
+  </definition>
+  
+  <!-- Group Audits -->
+  <definition name=".displayGroups" extends="layout">
+    <put name="body" value="/WEB-INF/jsps/displayGroups.jsp" />
+    <put name="sidenav"
+      value="/WEB-INF/jsps/groupAuditNav.jsp" />
+  </definition>
+  <definition name=".prepEditGroup" extends="layout">
+    <put name="body"
+      value="/WEB-INF/jsps/editGroup.jsp" />
+    <put name="sidenav"
+      value="/com/incl/empty.html" />
+  </definition>
+</tiles-definitions>

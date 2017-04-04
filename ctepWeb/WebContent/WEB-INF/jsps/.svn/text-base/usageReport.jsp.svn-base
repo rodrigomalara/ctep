@@ -1,0 +1,69 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+<%@ page import="com.eds.gne.ciscosecure.AppConstants"%>
+
+<script language="Javascript1.2" type="text/javascript">
+  <!--//
+  var msgInvalidOutputType = '<bean:message key="error.searchlogs.outputType.select" />';
+  var REPORT_TYPE_MSEXCEL = '<%=AppConstants.SEARCH_LOGS_REPORT_TYPE_MSEXCEL%>';
+  var REPORT_TYPE_CSV = '<%=AppConstants.SEARCH_LOGS_REPORT_TYPE_CSV%>';
+  //-->
+</script>
+
+<h2><bean:message key="label.usagereport.title" /></h2>
+<html:form action="/reports/usageReport.do?method=generateReport">
+  <table border="0">
+    <tr>
+      <td><bean:message key="label.searchlogs.outputType.label" /><span
+        class="accenttext">*</span></td>
+      <td>
+        <html:radio property="reportType" styleClass="required"
+        value="<%=AppConstants.SEARCH_LOGS_REPORT_TYPE_MSEXCEL%>"> &nbsp;
+                <bean:message key="label.searchlogs.outputType.MSExcel" />
+        </html:radio>&nbsp;&nbsp; 
+        <html:radio property="reportType" styleClass="required"
+        value="<%=AppConstants.SEARCH_LOGS_REPORT_TYPE_CSV%>"> &nbsp;
+                <bean:message key="label.searchlogs.outputType.CSV" />
+        </html:radio>&nbsp;&nbsp;
+        <html:radio property="reportType" styleClass="required" 
+        value="<%=AppConstants.SEARCH_LOGS_REPORT_TYPE_HTML%>"> &nbsp;
+                <bean:message key="label.usagereport.outputType.HTML" />
+        </html:radio>
+      </td>
+      <td>
+        <html:submit styleClass="submit"
+        onclick="return validate();">
+          <bean:message key="label.submit" />
+        </html:submit>
+      </td>
+    </tr> 
+  </table>
+  
+<!-- 	<p class="buttons"></p>  -->
+	
+	<!-- HTML Results -->
+	<logic:present name="usageReport">
+  	<display:table id="row" name="usageReport" 
+      requestURI="/reports/usageReport.do?method=generateReport">
+      <display:column property="userName" titleKey="label.usermaint.username" />
+      <display:column property="emailAddress" titleKey="label.adduser.email" />
+      <display:column property="reviewer.email" titleKey="label.adduser.reviewer" /> 
+      <display:column property="status" titleKey="label.usagereport.status" 
+        decorator="com.eds.gne.ciscosecure.global.dtdecorators.StatusDecorator" />
+      <display:column property="lastLogin.time" titleKey="label.usagereport.lastlogin" format="{0,date,MM-dd-yyyy}" />
+    </display:table>
+  </logic:present>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</html:form>

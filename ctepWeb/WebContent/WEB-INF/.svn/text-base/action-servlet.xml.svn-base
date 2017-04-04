@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+  <bean name="/audit/groupAudit" scope="singleton" autowire="byName"
+    class="com.eds.gne.ciscosecure.audit.actions.GroupAuditDispatchAction">
+    <property name="responseReportCSV">
+      <ref bean="groupAuditResponsesReportCSVBean"/>
+    </property>
+    <property name="responseReportMSExcel">
+      <ref bean="groupAuditResponsesReportMSExcelBean"/>
+    </property>
+    <property name="groupAuditFacade">
+      <ref bean="GroupAuditFacadeBean"/>
+    </property>
+    <property name="groupFacade">
+      <ref bean="GroupFacadeBean"/>
+    </property>
+  </bean>
+  
+  <bean name="/audit/groupConfirm" scope="singleton" autowire="byName"
+    class="com.eds.gne.ciscosecure.audit.actions.GroupMemberConfirmDispatchAction">
+    <property name="groupAuditFacade">
+      <ref bean="GroupAuditFacadeBean"/>
+    </property>
+    <property name="groupFacade">
+      <ref bean="GroupFacadeBean"/>
+    </property>
+    <property name="csuserFacade">
+      <ref bean="CSUserFacadeBean"/>
+    </property>
+  </bean>
+   
+  <bean name="/group/groupMaint" scope="singleton" autowire="byName"
+    class="com.eds.gne.ciscosecure.groups.actions.GroupMaintDispatchAction">
+    <property name="groupFacade">
+      <ref bean="GroupFacadeBean"/>
+    </property>
+    <property name="reviewerFacade">
+      <ref bean="ReviewerFacadeBean"/>
+    </property>
+  </bean>
+   
+</beans>

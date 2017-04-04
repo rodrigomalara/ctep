@@ -1,0 +1,19 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<ul class="desc" style="width: 95%">
+  <li><strong><bean:message key="message.auth.howto1" /></strong></li>
+  <li><bean:message key="message.auth.howto2" /></li>
+</ul>
+<form action="j_security_check" method="post" name="commentform" id="commentform" onsubmit="return formValidation(commentform);">
+  <label for="name"><bean:message key="label.auth.username"/>: <span class="accenttext">*</span></label> <input type="text" value="" size="40" name="j_username" title="User Name" id="username" class="required" />
+  <br/><label for="location"><bean:message key="label.auth.password"/>: <span class="accenttext">*</span></label> <input type="password" value="" size="40" name="j_password" title="Password" id="password" />
+  <p class="buttons">
+    <input type="submit" name="Submit" value="<bean:message key="button.auth.submit"/>" class="submit" />
+  </p>
+</form>
+<script language="Javascript1.2" type="text/javascript">
+<!--//
+document.forms[0].elements["j_username"].focus();
+//-->
+</script>

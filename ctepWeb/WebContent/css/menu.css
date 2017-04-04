@@ -1,0 +1,19 @@
+span.TreeviewSpanArea A {
+	font-size: 10pt;
+	font-family: verdana, helvetica;
+	text-decoration: none;
+	color: black;
+}
+
+span.TreeviewSpanArea A:hover {
+	color: '#820082';
+}
+
+body {
+	background-color: white;
+}
+
+td {
+	font-size: 10pt;
+	font-family: verdana, helvetica;
+}

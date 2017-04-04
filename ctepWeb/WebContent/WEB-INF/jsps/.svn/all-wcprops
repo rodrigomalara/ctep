@@ -1,0 +1,107 @@
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/CiscoSecure/!svn/ver/272/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/jsps
+END
+editUser.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/CiscoSecure/!svn/ver/271/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/jsps/editUser.jsp
+END
+assocConfirm.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/CiscoSecure/!svn/ver/296/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/jsps/assocConfirm.jsp
+END
+displayUsers.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/CiscoSecure/!svn/ver/271/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/jsps/displayUsers.jsp
+END
+groupAuditNav.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/CiscoSecure/!svn/ver/272/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/jsps/groupAuditNav.jsp
+END
+editReviewer.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/CiscoSecure/!svn/ver/271/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/jsps/editReviewer.jsp
+END
+displayReviewers.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/CiscoSecure/!svn/ver/271/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/jsps/displayReviewers.jsp
+END
+editGroup.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/CiscoSecure/!svn/ver/271/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/jsps/editGroup.jsp
+END
+listGroupAudits.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/CiscoSecure/!svn/ver/292/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/jsps/listGroupAudits.jsp
+END
+groupMemberConfirm.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/CiscoSecure/!svn/ver/296/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/jsps/groupMemberConfirm.jsp
+END
+displayGroups.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/CiscoSecure/!svn/ver/261/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/jsps/displayGroups.jsp
+END
+createGroupAudit.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/CiscoSecure/!svn/ver/272/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/jsps/createGroupAudit.jsp
+END
+verifyGroupAudit.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/CiscoSecure/!svn/ver/296/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/jsps/verifyGroupAudit.jsp
+END
+login.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/CiscoSecure/!svn/ver/292/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/jsps/login.jsp
+END
+logout.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/CiscoSecure/!svn/ver/252/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/jsps/logout.jsp
+END
+userMaintNav.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/CiscoSecure/!svn/ver/271/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/jsps/userMaintNav.jsp
+END
+batchChgReviewer.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/CiscoSecure/!svn/ver/277/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/jsps/batchChgReviewer.jsp
+END
+groupAudit.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/CiscoSecure/!svn/ver/252/branches/groupAudit/ciscoSecureWeb/WebContent/WEB-INF/jsps/groupAudit.jsp
+END

@@ -1,0 +1,99 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ page import="com.eds.gne.ciscosecure.AppConstants"%>
+
+<%@page import="com.eds.gne.ciscosecure.search.delegate.ServiceEntry"%>
+<script language="Javascript" src="<%=request.getContextPath()%>/com/js/tranlogDateSelect.js"></script>
+<script language="Javascript" src="<%=request.getContextPath()%>/com/js/validation.js"></script>
+
+<script language="Javascript1.2" type="text/javascript">
+	<!--//
+	var cal1 = new CalendarPopup();
+	cal1.showYearNavigation();
+	cal1.setTodayText('<bean:message key="label.searchlogs.dateperiod.today" />');
+	var fromDate = '<bean:message key="msg.searchlogs.startDate" />';
+	var toDate = '<bean:message key="msg.searchlogs.endDate" />';
+	var msgInvalidIP = '<bean:message key="error.searchlogs.deviceIP" />';
+	var msgInvalidStartDate = '<bean:message key="error.searchlogs.startDate" />';
+	var msgInvalidEndDate = '<bean:message key="error.searchlogs.endDate" />';
+	var msgInvalidOutputType = '<bean:message key="error.searchlogs.outputType.select" />';
+	var msgOneMoreFilterMSExcel = '<bean:message key="error.searchlogs.outputType.oneMoreFilterMSExcel" />';
+	var dateFormat = '<bean:write property="dateFormat" name="FormSearchLogs"/>';
+	var REPORT_TYPE_MSEXCEL = '<%=AppConstants.SEARCH_LOGS_REPORT_TYPE_MSEXCEL%>';
+	var REPORT_TYPE_CSV = '<%=AppConstants.SEARCH_LOGS_REPORT_TYPE_CSV%>';
+	//-->
+</script>
+<script language="JavaScript1.2" src="<%=request.getContextPath()%>/com/js/searchLogsParam.js"></script>
+
+<h2><bean:message key="label.searchlogs.title" /></h2>
+<br/><bean:message key="label.searchlogs.help" />
+<html:form action="/reports/searchLogs.do?method=generateReport">
+	<html:hidden property="dateFormat" />
+	<table border="0">
+		<tr>
+			<td><bean:message key="label.searchlogs.userid" /></td>
+			<td><html:text property="searchParam.userId" maxlength="100"
+				size="40" /></td>
+		</tr>
+	  <tr>
+			<td><bean:message key="label.searchlogs.email" /></td>
+			<td><html:text property="searchParam.email" maxlength="100"
+				size="40" /></td>
+		</tr>
+		<tr>
+			<td><bean:message key="label.searchlogs.deviceIP" /></td>
+			<td><html:text property="searchParam.deviceIP" maxlength="15"
+				size="20" /></td>
+		</tr>
+		<tr>
+			<td><bean:message key="label.searchlogs.dateperiod" /> (<bean:write
+				property="dateFormat" name="FormSearchLogs" />) <span
+				class="accenttext">*</span></td>
+			<td><html:text property="searchParam.startDate" maxlength="10"
+				size="12" styleClass="required" /> <a
+				style="position: relative; top: 3;" href="#"
+				onclick="javascript:calendar('from');"
+				onmouseover="javascript:closing=false;"
+				onmouseout="javascript:closing=true;" name="anchor1" id="anchor1">
+			<img src="<%=request.getContextPath()%>/com/img/cal.gif" width="20" height="20" border="0"> </a>
+			<html:text property="searchParam.endDate" maxlength="10" size="12"
+				styleClass="required" /> <a style="position: relative; top: 3;"
+				href="#" onclick="javascript:calendar('to');"
+				onmouseover="javascript:closing=false;"
+				onmouseout="javascript:closing=true;" name="anchor2" id="anchor2">
+			<img src="<%=request.getContextPath()%>/com/img/cal.gif" width="20" height="20" border="0"> </a>
+			</td>
+		</tr>
+
+		<bean:size name="FormSearchLogs" property="tacacsBoxes" id="boxesQty" />
+		<logic:greaterThan name="boxesQty" value="1">
+			<tr>
+				<td><bean:message key="label.searchlogs.hosts" /><span
+					class="accenttext">*</span></td>
+				<td><logic:iterate name="FormSearchLogs" id="item"
+					property="tacacsBoxes">
+					<html:radio property="selectedBox" value="<%=((ServiceEntry) item).getName()%>" />
+					
+					<bean:write name="item" property="name" />&nbsp;&nbsp;
+				</logic:iterate></td>
+			</tr>
+		</logic:greaterThan>
+		<tr>
+			<td><bean:message key="label.searchlogs.outputType.label" /><span
+				class="accenttext">*</span></td>
+			<td><html:radio property="reportType" styleClass="required"
+				value="<%=AppConstants.SEARCH_LOGS_REPORT_TYPE_MSEXCEL%>"> &nbsp;
+          	  	<bean:message key="label.searchlogs.outputType.MSExcel" />
+			</html:radio> &nbsp;&nbsp; <html:radio property="reportType" styleClass="required"
+				value="<%=AppConstants.SEARCH_LOGS_REPORT_TYPE_CSV%>"> &nbsp;
+          	  	<bean:message key="label.searchlogs.outputType.CSV" />
+			</html:radio></td>
+		</tr>
+	</table>
+
+	<p class="buttons"><html:submit styleClass="submit"
+		onclick="return validate();">
+		<bean:message key="button.searchlogs.submit" />
+	</html:submit></p>
+</html:form>

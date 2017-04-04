@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL MAP 2.0//EN" 
+  "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="TarefaHist">
+
+    <typeAlias alias="tarefahist" type="br.com.ctep.entidades.TarefaHist"/>
+
+    <resultMap id="tarefahistResult" class="tarefahist">
+      <result property="idTarefaHist"    column="id_tarefa"/>
+      <result property="idTarefa"        column="id_tarefa"/>
+      <result property="estadoAnterior"  column="estado_anterior"/>
+      <result property="estadoAtual"     column="estado_atual"/>
+      <result property="userName"       column="user_name"/>
+      <result property="comentarios"     column="comentarios"/>
+      <result property="tstamp"          column="tstamp"/>
+    </resultMap>
+
+    <select id="listaTarefaHists" resultMap="tarefahistResult">
+      SELECT * FROM tarefa_hist order by tstamp desc
+    </select>
+    
+    <select id="contaTarefaHists" resultClass="java.lang.Integer">
+      SELECT count(*) FROM tarefa_hist
+    </select>
+    
+    <sql id="tarefahistPorExemploClause">
+      <dynamic prepend="where">
+        <isNotEmpty property="idTarefa" prepend="and">
+          id_tarefa = #idTarefa#
+        </isNotEmpty>
+        <isNotEmpty property="comentarios" prepend="and">
+          upper(comentarios) like upper('%' || #comentarios# || '%')
+        </isNotEmpty>
+      </dynamic>
+    </sql>
+    
+    <select id="listaTarefaHistsPorExemplo" resultMap="tarefahistResult">
+      SELECT * FROM tarefa_hist 
+      <include refid="tarefahistPorExemploClause"/>
+      order by tstamp desc
+    </select>
+    
+    <select id="contaTarefaHistsPorExemplo" resultClass="java.lang.Integer">
+        SELECT count(*)
+        FROM tarefa_hist
+        <include refid="tarefahistPorExemploClause"/>
+    </select>
+
+    <select id="pegaTarefaHist" parameterClass="long"
+            resultMap="tarefahistResult" >
+        SELECT * FROM tarefa_hist
+        WHERE id_tarefa_hist = #idTarefaHist#
+    </select>
+    
+    <insert id="insereTarefaHist" parameterClass="tarefahist" >
+         <selectKey keyProperty="idTarefaHist" type="pre" resultClass="int">
+          SELECT cast(nextval('tarefa_hist_seq') as integer) AS idTarefaHist
+        </selectKey>
+        INSERT INTO tarefa_hist (id_tarefa_hist, id_tarefa, estado_anterior,
+          estado_atual, user_name, comentarios, tstamp)
+        VALUES (#idTarefaHist#, #idTarefa#, #estadoAnterior#, #estadoAtual#,
+          #userName#, #comentarios#, #tstamp#)
+    </insert>
+
+    <update id="atualizaTarefaHist" parameterClass="tarefahist">
+      UPDATE tarefa_hist SET id_tarefa=#idTarefa#, estado_anterior=#estadoAnterior#,
+        estado_atual=#estadoAtual#, user_name=#userName#, comentarios=#comentarios#, 
+        tstamp=#tstamp#
+      WHERE id_tarefa_hist=#idTarefaHist#
+    </update>
+    
+    <delete id="apagaTarefaHist" parameterClass="tarefahist">
+      DELETE FROM tarefa_hist where id_tarefa_hist = #idTarefaHist#
+    </delete>
+    
+    <delete id="apagaTarefaHistPorTarefa" parameterClass="tarefahist">
+      DELETE FROM tarefa_hist where id_tarefa = #idTarefa#
+    </delete>
+    
+</sqlMap>

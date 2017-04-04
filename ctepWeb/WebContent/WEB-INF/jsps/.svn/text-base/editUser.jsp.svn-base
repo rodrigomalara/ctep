@@ -1,0 +1,149 @@
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ page import="com.eds.gne.ciscosecure.entities.jpa.CSUser"%>
+<%@ page import="com.eds.gne.ciscosecure.global.dtdecorators.StatusDecorator"%>
+<bean:define id="usr" property="user" name="FormUser"/>
+<%com.eds.gne.ciscosecure.entities.jpa.CSUser user = 
+  (com.eds.gne.ciscosecure.entities.jpa.CSUser) usr;%>
+
+<script language="Javascript" src="<%=request.getContextPath()%>/com/js/tigra_hints.js"></script>
+<script language="Javascript" src="<%=request.getContextPath()%>/com/js/tigra_hints_cfg.js"></script>
+
+<script language="Javascript" src="<%=request.getContextPath()%>/com/js/validation.js"></script>
+<script language="Javascript1.2" type="text/javascript">
+	<!--//
+	var msgIsEmpty = '<bean:message key="errors.isempty" />';
+	var msgInvalidEmail = '<bean:message key="errors.invalidEmail" />';
+	
+	var groupLabel = '<bean:message key="label.adduser.groupname" />';
+	var userNameLabel = '<bean:message key="label.usermaint.username" />';
+	var fullNameLabel = '<bean:message key="label.adduser.fullname" />';
+	var descriptionLabel = '<bean:message key="label.adduser.description" />';
+	var emailLabel = '<bean:message key="label.adduser.email" />';
+  var reviewerLabel = '<bean:message key="label.adduser.reviewer" />';
+	
+	var fullNameIsEmpty = msgIsEmpty.replace(/#0#/,"'" + fullNameLabel + "'");
+	var descriptionIsEmpty = msgIsEmpty.replace(/#0#/,"'" + descriptionLabel + "'");
+	var emailIsEmpty = msgIsEmpty.replace(/#0#/,"'" + emailLabel + "'");
+	var emailInvalid = msgInvalidEmail.replace(/#0#/,"'" + emailLabel + "'");
+
+	var reviewerIsEmpty = msgIsEmpty.replace(/#0#/,"'" + reviewerLabel + "'");
+	var groupIsEmpty = msgIsEmpty.replace(/#0#/,"'" + groupLabel + "'");
+	
+	function validate() {
+		if (document.forms['FormUser'].elements["user.fullName"].value.length < 1) {
+	    alert(fullNameIsEmpty);
+	    document.forms['FormUser'].elements["user.fullName"].focus();
+	    return false;
+	  }
+	  if (document.forms['FormUser'].elements["user.description"].value.length < 1) {
+	    alert(descriptionIsEmpty);
+	    document.forms['FormUser'].elements["user.description"].focus();
+	    return false;
+	  }
+	  if (document.forms['FormUser'].elements["user.emailAddress"].value.length < 1) {
+	    alert(emailIsEmpty);
+	    document.forms['FormUser'].elements["user.emailAddress"].focus();
+	    return false;
+	  }
+	  if (emailValidation(document.forms['FormUser'].elements["user.emailAddress"].value)==false){
+	    alert(emailInvalid);
+	    document.forms['FormUser'].elements["user.emailAddress"].value=""
+      document.forms['FormUser'].elements["user.emailAddress"].focus();
+      return false;
+    }
+	  
+	  if (document.forms['FormUser'].elements["user.group.groupId"].value.length < 1) {
+      alert(groupIsEmpty);
+      document.forms['FormUser'].elements["user.group.groupId"].focus();
+      return false;
+    }
+	  if (document.forms['FormUser'].elements["user.reviewer.reviewerId"].value.length < 1) {
+      alert(reviewerIsEmpty);
+      document.forms['FormUser'].elements["user.reviewer.reviewerId"].focus();
+      return false;
+    }
+    return true;
+	}
+
+	function back() {
+		document.forms['FormUser'].action = '<%=request.getContextPath()%>/users/userMaint.do?method=list';
+		document.forms['FormUser'].submit();
+	}
+	//-->
+</script>
+
+<h2><bean:message key="label.edituser.title" /></h2>
+<html:form action="/users/userMaint.do?method=submitEditUser">
+  <html:hidden property="user.userKey" />
+  <html:hidden property="user.userName" /> 
+	<table border="0">
+		<tr>
+			<td><bean:message key="label.usermaint.username" /></td>
+			<td><bean:write property="user.userName" name="FormUser" /></td>
+		</tr>
+		<tr>
+      <td><bean:message key="label.adduser.fullname" /></td>
+      <td><html:text property="user.fullName" maxlength="100" 
+        size="50" /></td>
+    </tr>
+    <tr>
+      <td><bean:message key="label.adduser.description" /></td>
+      <td><html:text property="user.description" maxlength="50"
+        size="50" /></td>
+    </tr>
+    <tr>
+      <td><bean:message key="label.adduser.email" /></td>
+      <td><html:text property="user.emailAddress" maxlength="50"
+        size="35" /></td>
+    </tr>
+    <tr>
+      <td><bean:message key="label.adduser.reviewer" /></td>
+      <td>
+        <html:select property="user.reviewer.reviewerId">
+          <html:option value=""></html:option>
+          <html:optionsCollection property="reviewers" label="email" value="reviewerId" />
+        </html:select>
+      </td>
+    </tr>
+	  <tr>
+      <td><bean:message key="label.adduser.groupname" /></td>
+      <td>
+        <html:select property="user.group.groupId">
+          <html:option value=""></html:option>
+          <html:optionsCollection property="groups" label="groupName" value="groupId" />
+        </html:select>
+      </td>
+    </tr>
+    <tr>
+      <td><bean:message key="label.edituser.laststatus" /></td>
+      <td><%out.print(new StatusDecorator().decorate(((CSUser)usr).getStatus(), pageContext, null));%>
+      </td>
+    </tr>
+    <tr>
+      <td><bean:message key="label.changestatus.status" /></td>
+      <td>
+      <html:radio property="userStatus" 
+          styleClass="required"
+          value="<%=CSUser.STATUS_ENABLED.toString()%>">&nbsp;
+          <bean:message key="label.changestatus.enabled" />
+      </html:radio>&nbsp;&nbsp;
+      <html:radio property="userStatus" 
+          styleClass="required"
+          value="<%=CSUser.STATUS_DISABLED.toString()%>">&nbsp;
+          <bean:message key="label.changestatus.disabled" />
+      </html:radio>
+      </td>
+    </tr>
+	</table>
+
+  <p class="buttons">
+	  <html:submit styleClass="submit" onclick="return validate();">
+		  <bean:message key="label.submit" />
+	  </html:submit>
+    <html:button property="" styleClass="submit" onclick="back();">
+      <bean:message key="label.back" />
+    </html:button>
+  </p>
+</html:form>

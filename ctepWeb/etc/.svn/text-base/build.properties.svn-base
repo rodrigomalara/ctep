@@ -1,0 +1,12 @@
+# Properties containing parameters for proper creation of JAX-WS client stubs
+
+# Options to wsimport/apt
+debug=false
+keep=true
+verbose=false
+
+# customization files
+client.binding=custom-client.xml, custom-schema.xml
+
+client.wsdl=http://localhost:8080/logSearchEngine/ciscoSecureSearch?wsdl
+client=com.eds.gne.ciscosecure.search.client.SearchLogsClient
